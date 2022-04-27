@@ -1,5 +1,6 @@
 package com.luxoft.bank.email;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,7 +8,8 @@ import com.luxoft.bank.domain.Client;
 
 public class Email implements Serializable {
 
-	private static final long serialVersionUID = -3686472195559526951L;
+	@Serial
+    private static final long serialVersionUID = -3686472195559526951L;
 	private Client from;
     private ArrayList<Client> to, copy;
     private String title, body;
@@ -31,7 +33,7 @@ public class Email implements Serializable {
     }
 
     public Email setTo(Client to) {
-    	ArrayList<Client> toList = new ArrayList<Client>();
+    	ArrayList<Client> toList = new ArrayList<>();
     	toList.add(to);
         setTo(toList);
         return this;
@@ -47,7 +49,7 @@ public class Email implements Serializable {
     }
 
     public Email setCopy(Client copy) {
-    	ArrayList<Client> copyList = new ArrayList<Client>();
+    	ArrayList<Client> copyList = new ArrayList<>();
     	copyList.add(copy);
         setCopy(copyList);
         return this;

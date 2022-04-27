@@ -1,8 +1,15 @@
 package com.luxoft.bank.domain;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.io.Serial;
 import java.io.Serializable;
 
+@Setter
+@Getter
 public class Currency implements Serializable {
+	@Serial
 	private static final long serialVersionUID = 64023495560719474L;
 	private String code;
 	private String country;
@@ -10,21 +17,5 @@ public class Currency implements Serializable {
 	public Currency (String code) {
        this.code = code;
     }
-
-    public String getCode() {
-	    return code;
-	}
-    
-    public String getCountry() {
-		return country;
-	}
-    
-    public void setCode(String code) {
-		this.code = code;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
 
 }

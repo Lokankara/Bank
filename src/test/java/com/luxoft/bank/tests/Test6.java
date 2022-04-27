@@ -39,7 +39,7 @@ public class Test6 {
 				                .setBody("Your e-mail has been sent!")
 				);
 			} catch (EmailException e) {
-				e.printStackTrace();
+				System.err.println(e.getMessage());
 			}
 	        Thread.sleep(1000);
 		}

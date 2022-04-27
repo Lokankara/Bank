@@ -3,10 +3,10 @@ package com.luxoft.bank.domain;
 public enum Gender {
 	MALE("Mr.", "m"), FEMALE("Ms.", "f");
 
-	private String greeting;
-	private String stringLine;
+	private final String greeting;
+	private final String stringLine;
 
-	private Gender(String greeting, String stringLine) {
+	Gender(String greeting, String stringLine) {
         this.greeting = greeting;
         this.stringLine = stringLine;
     }

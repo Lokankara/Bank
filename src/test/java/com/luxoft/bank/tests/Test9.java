@@ -24,8 +24,8 @@ public class Test9 {
 	@Test
 	public void testAnalysis() {
 		AbstractSpecialist specialistsChain = getChainOfSpecialists();
-		assertEquals(200.0, AbstractSpecialist.calculateAnalysisComission(100000.0, true), 0);
-		assertEquals(1000.0, AbstractSpecialist.calculateAnalysisComission(200000.0, false), 0);
+		assertEquals(200.0, AbstractSpecialist.calculateAnalysisCommission(100000.0, true), 0);
+		assertEquals(1000.0, AbstractSpecialist.calculateAnalysisCommission(200000.0, false), 0);
 		assertFalse(specialistsChain.makeDecision(100000.0, 1000.00, 2600.00, true));
 		System.out.println();
 		assertFalse(specialistsChain.makeDecision(100000.0, 1000.00, 3600.00, false));

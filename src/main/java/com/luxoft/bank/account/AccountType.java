@@ -5,9 +5,9 @@ public enum AccountType {
     SAVING(1),
     CHECKING(2);
 
-    public final int type;
+    final int type;
 
-    private AccountType(int type) {
+    AccountType(int type) {
         this.type = type;
     }
 }

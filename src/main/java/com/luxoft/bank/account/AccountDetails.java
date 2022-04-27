@@ -12,5 +12,4 @@ public class AccountDetails {
     private double amount;
     private double overdraft;
     private String type;
-
 }

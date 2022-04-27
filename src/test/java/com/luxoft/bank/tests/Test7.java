@@ -12,11 +12,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.luxoft.bank.account.Account;
-import com.luxoft.bank.domain.Bank;
+import com.luxoft.bank.bank.Bank;
 import com.luxoft.bank.domain.Client;
 import com.luxoft.bank.domain.Gender;
-import com.luxoft.bank.service.BankDataLoaderService;
-import com.luxoft.bank.service.BankReport;
+import com.luxoft.bank.bank.service.BankDataLoaderService;
+import com.luxoft.bank.bank.service.BankReport;
 
 public class Test7 {
 	
@@ -61,7 +61,8 @@ public class Test7 {
 		Map<Client, Collection<Account>>  customerAccounts = bankReport.getCustomerAccounts();
 		
 		assertEquals(10, customerAccounts.size());
-		assertEquals("Saving account 4, balance: 487.72", customerAccounts.get(new Client(("Brian"), Gender.MALE)).iterator().next().toString());
+		assertEquals("Saving account 4, balance: 487.72",
+				customerAccounts.get(new Client(("Brian"), Gender.MALE)).iterator().next().toString());
 	}
 	
 	@Test

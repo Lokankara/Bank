@@ -7,7 +7,6 @@ import java.util.Locale;
 import com.luxoft.bank.domain.Currency;
 import com.luxoft.bank.utils.Params;
 
-
 public class SavingAccount extends AbstractAccount {
 
 	@Serial
@@ -32,7 +31,9 @@ public class SavingAccount extends AbstractAccount {
 	@Override
 	public String toString() {
 		Formatter fmt = new Formatter(Locale.US);
-		String stringAccount = fmt.format("Saving account %d, balance: %.2f", getId(), balance).toString(); 
+		String stringAccount = fmt.format(
+				"Saving account %d, balance: %.2f",
+				getId(), getBalance()).toString();
 		fmt.close();
 		return stringAccount;
 	}

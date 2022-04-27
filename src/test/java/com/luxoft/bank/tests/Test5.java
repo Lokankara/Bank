@@ -9,10 +9,10 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.luxoft.bank.domain.Bank;
+import com.luxoft.bank.bank.Bank;
 import com.luxoft.bank.domain.Client;
 import com.luxoft.bank.domain.Gender;
-import com.luxoft.bank.service.BankDataLoaderService;
+import com.luxoft.bank.bank.service.BankDataLoaderService;
 
 public class Test5 {
 	Set<Client> clients = new HashSet<Client>(); 

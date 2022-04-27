@@ -1,14 +1,16 @@
 package com.luxoft.bank.account;
 
 import com.luxoft.bank.exceptions.NotEnoughFundsException;
+import com.luxoft.bank.exceptions.OverdraftLimitExceededException;
 import com.luxoft.bank.utils.Params;
+import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 import static com.luxoft.bank.account.AccountType.CHECKING;
 import static com.luxoft.bank.account.AccountType.SAVING;
-
+@Getter
 public abstract class AbstractAccount implements Account, Cloneable, Serializable {
 
     @Serial
@@ -20,17 +22,13 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
 
     private final int id;
     private int type;
-
-    public double balance;
+    private double balance;
 
     public AbstractAccount(int id, double amount) {
         this.id = id;
         this.balance = amount;
     }
 
-    public int getType() {
-        return type;
-    }
 
     public void setType(int type) {
         this.type = type;
@@ -39,7 +37,8 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
     @Override
     public void deposit(final double amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Cannot deposit a negative amount");
+            throw new IllegalArgumentException(
+                    "Cannot deposit a negative amount");
         }
         this.balance += amount;
     }
@@ -51,9 +50,10 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
         }
 
         if (amount > maximumAmountToWithdraw()) {
-            throw new NotEnoughFundsException(id, balance, amount, "Requested amount exceeds the maximum amount to withdraw");
+            throw new NotEnoughFundsException(
+                    id, balance, amount,
+                    "Requested amount exceeds the maximum amount to withdraw");
         }
-
         this.balance -= amount;
     }
 
@@ -63,19 +63,9 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
         }
         if (type == CHECKING_ACCOUNT_TYPE) {
             CheckingAccount checkingAccount = (CheckingAccount) this;
-            return checkingAccount.balance + checkingAccount.overdraft;
+            return checkingAccount.getBalance() + checkingAccount.getOverdraft();
         }
         return 0;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public double getBalance() {
-        return balance;
     }
 
     @Override

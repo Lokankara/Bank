@@ -8,13 +8,13 @@ import java.util.Set;
 import org.junit.Test;
 
 import com.luxoft.bank.account.Account;
-import com.luxoft.bank.domain.Bank;
+import com.luxoft.bank.bank.Bank;
 import com.luxoft.bank.account.CheckingAccount;
 import com.luxoft.bank.domain.Client;
 import com.luxoft.bank.domain.Gender;
 import com.luxoft.bank.account.SavingAccount;
 import com.luxoft.bank.exceptions.ClientExistsException;
-import com.luxoft.bank.service.BankService;
+import com.luxoft.bank.bank.service.BankService;
 
 public class Test2 {
 	

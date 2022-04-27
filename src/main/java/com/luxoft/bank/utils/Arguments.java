@@ -1,7 +1,7 @@
 package com.luxoft.bank.utils;
 
 public class Arguments {
-    private String[] arguments;
+    private final String[] arguments;
     
     public Arguments(String[] arguments) {
         this.arguments = arguments;
