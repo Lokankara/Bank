@@ -1,0 +1,108 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "master", "dev" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: read
+  checks: write
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    services:
+      postgres:
+        image: postgres
+
+        env:
+          POSTGRES_PASSWORD: mypass
+          POSTGRES_USER: myuser
+          POSTGRES_DB: example
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - run: |
+          sudo apt-get update && sudo apt-get install --yes --no-install-recommends postgresql-client
+      - run: |
+          ls -lah ${{ github.workspace }}
+      - run: |
+          psql -h localhost -U myuser -d example -c '
+
+          CREATE TABLE "users"
+          (
+          id         SERIAL PRIMARY KEY,
+          first_name VARCHAR(255) NOT NULL,
+          last_name  VARCHAR(255) NOT NULL,
+          username   VARCHAR(255) NOT NULL UNIQUE,
+          password   VARCHAR(255) NOT NULL,
+          is_active  BOOLEAN      NOT NULL
+          );
+                    
+          '
+
+        env:
+          PGPASSWORD: mypass
+      - run: |
+          psql -h localhost -U myuser -d example -c '\dt'
+        env:
+          PGPASSWORD: mypass
+
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven-
+
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v2
+
+  check-java-code-style:
+    name: Check Java code style
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone code from repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run java checkstyle
+        uses: nikitasavinov/checkstyle-action@master
+        with:
+          checkstyle_config: 'check.xml'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: 'github-pr-check'
+          tool_name: 'Checkstyle'
