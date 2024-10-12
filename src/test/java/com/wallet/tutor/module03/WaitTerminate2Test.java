@@ -9,10 +9,8 @@ import org.junit.jupiter.api.Test;
  */
 @Slf4j
 public class WaitTerminate2Test {
-    static StringBuffer buf = new StringBuffer();
-
     Thread t1, t2;
-    Object monitor = new Object();
+    private final Object monitor = new Object();
     int runningThreadNumber = 1;
 
     class TestThread implements Runnable {
@@ -26,7 +24,6 @@ public class WaitTerminate2Test {
         @Override
         public void run() {
             for (int i = 0; ; i++) {
-                log.info(threadName + ":" + i);
                 synchronized (monitor) {
                     try {
                         int waitingCycle = 0;

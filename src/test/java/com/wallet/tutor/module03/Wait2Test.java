@@ -37,13 +37,11 @@ public class Wait2Test {
 					try {
 						if (n==1) {
 							if (i>t2Counter) {
-								log.info("t1 is ahead with i=" + i + ", wait for t2Counter = " + t2Counter);
 								monitor.wait();
 							}
 						}
 						if (n==2) {
 							if (i>t1Counter) {
-								log.info("t2 is ahead with i=" + i + ", wait for t1Counter = " + t1Counter);
 								monitor.wait();
 							}
 						}

@@ -40,8 +40,6 @@ public class WaitTest {
         @Override
         public void run() {
             for (int i = 0; i < 100; i++) {
-                System.out.printf("%s#%d%n", threadName, i);
-
                 if (n % 2 == 0) {
                     t2Counter = i;
                 } else {

@@ -16,9 +16,8 @@ import org.junit.jupiter.api.Test;
 public class WaitTutorJubileeTest {
 
     Thread t1, t2, t3;
-    Object monitor = new Object();
-    Object jubileeMonitor = new Object();
-    int runningThreadNumber = 1;
+    private final Object monitor = new Object();
+    private final Object jubileeMonitor = new Object();
     int t1Counter = 0, t2Counter = 0;
     volatile int waitingThreads = 0;
 
@@ -61,14 +60,12 @@ public class WaitTutorJubileeTest {
                     try {
                         if (n == 1) {
                             if (i > t2Counter) {
-                                log.info("t1 is ahead with i=" + i + ", wait for t2Counter = " + t2Counter);
                                 monitor.wait();
 
                             }
                         }
                         if (n == 2) {
                             if (i > t1Counter) {
-                                log.info("t2 is ahead with i=" + i + ", wait for t1Counter = " + t1Counter);
                                 monitor.wait();
                             }
                         }
