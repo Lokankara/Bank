@@ -121,7 +121,6 @@ public class WaitTutorJubileeTest {
     int counterOccured = 0;
 
     private void logAndCheckCounter(String threadName, int c) {
-        log.info(threadName + ":" + c);
         if (counter != c) {
             wrongCounter = true;
         }

@@ -44,7 +44,6 @@ public class EmailService implements Runnable, Serializable {
     }
 
     private void sendEmail(Email email) {
-        log.info(email.getBody());
         sentEmails++;
     }
 
