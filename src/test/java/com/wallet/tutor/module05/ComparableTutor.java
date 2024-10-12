@@ -1,22 +1,23 @@
 package com.wallet.tutor.module05;
 
-import static com.wallet.tutor.Logger.log;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.wallet.tutor.Logger;
-import org.junit.jupiter.api.Test;
-
 /**
- * Implement method Set<Animal> getAnimalsOrderedByNameSet()
- * and method Set<Animal> getAnimalsOrderedByNameSetDesc()
+ * Implement method Set getAnimalsOrderedByNameSet()
+ * and method Set getAnimalsOrderedByNameSetDesc()
  */
 
+@Slf4j
 public class ComparableTutor {
     String[] animals =
             {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
@@ -92,9 +93,9 @@ public class ComparableTutor {
 
     @Test
     public void testCollections() {
-        log("getAnimalsList: " + joinByCycle(Arrays.asList(animals)));
-        log("getAnimalsOrderedByNameSet: " + joinByCycle(getAnimalsOrderedByNameSet()));
-        log("getAnimalsOrderedByNameSetDesc: " + joinByCycle(getAnimalsOrderedByNameSetDesc()));
+        log.info("getAnimalsList: " + joinByCycle(Arrays.asList(animals)));
+        log.info("getAnimalsOrderedByNameSet: " + joinByCycle(getAnimalsOrderedByNameSet()));
+        log.info("getAnimalsOrderedByNameSetDesc: " + joinByCycle(getAnimalsOrderedByNameSetDesc()));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.wallet.tutor.module09;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -17,12 +18,9 @@ public class FlatMapExample {
         
         List<List<Integer>> list = Arrays.asList(list1, list2, list3);
         
-        log.info(list.toString());
-        
         Function<List<?>, Integer> size = List::size;
-        Function<List<Integer>, Stream<Integer>> flatmapper = 
-                l -> l.stream();
-        
+        Function<List<Integer>, Stream<Integer>> flatmapper = Collection::stream;
+
         list.stream()
                 .flatMap(flatmapper)
                 .forEach(System.out::print);

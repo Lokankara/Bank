@@ -9,8 +9,7 @@ class SynTest implements Runnable {
     public void run() {
         for (int i = 0; i < 50; i++) {
             increment();
-            log.info(
-                    "balance is " + balance);
+            log.info("balance is " + balance);
         }
     }
 

@@ -49,7 +49,6 @@ public class FormatNumberTest {
     public void testFormatNumber() {
         formatNumber();
         String number = formatNumber(Math.PI);
-        log.info(number);
         assertEquals("3.14", number);
     }
 }

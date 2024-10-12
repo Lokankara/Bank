@@ -1,6 +1,6 @@
 package com.wallet.tutor.module01;
 
-import static com.wallet.tutor.module01.RegExpTutor.match;
+import static com.wallet.tutor.module01.RegExpTest.match;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;

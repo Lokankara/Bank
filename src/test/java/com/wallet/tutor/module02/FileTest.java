@@ -1,35 +1,31 @@
 package com.wallet.tutor.module02;
 
-import static com.wallet.tutor.Logger.log;
-import java.io.File;
-import java.io.IOException;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-public class FileTutor {
-    private final String FILE_NAME = "test.txt";
-    private final String PATH = "test";
+import java.io.File;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+@Slf4j
+public class FileTest {
+    private static final String PATH = "test";
+    private static final String FILE_NAME = "test.txt";
 
     /**
      * The method must create a folder "test" and a file "test.txt" inside it
      * Also, output in the full path to the log file you have created
      */
     public void createFile() {
-
         File[] fileMap = mapper();
-
         boolean folder = fileMap[0].mkdir();
-
-        log(String.format("New Dir: %s", folder));
-
+        log.info(String.format("New Dir: %s", folder));
         try {
             boolean newFile = fileMap[1].createNewFile();
-
-            log(String.format("New File: %s", newFile));
-
+            log.info(String.format("New File: %s", newFile));
         } catch (IOException e) {
-
             throw new RuntimeException(e);
         }
     }
@@ -40,31 +36,20 @@ public class FileTutor {
     public void deleteFile() {
 
         File[] fileMap = mapper();
-
         boolean deleteFile = fileMap[1].delete();
-
         boolean deleteDir = fileMap[0].delete();
-
-        log(String.format("File deleted: %s", deleteFile));
-
-        log(String.format("Dir deleted: %s", deleteDir));
+        log.info(String.format("File deleted: %s", deleteFile));
+        log.info(String.format("Dir deleted: %s", deleteDir));
     }
 
     private File[] mapper() {
-
         File dir = new File(PATH);
-
         File file = new File(PATH + "/" + FILE_NAME);
-
         File[] array = {dir, file};
-
-        log(file.getAbsolutePath());
-
-        log(dir.getAbsolutePath());
-
+        log.info(file.getAbsolutePath());
+        log.info(dir.getAbsolutePath());
         return array;
     }
-
 
     @Test
     public void testCreateFile() {

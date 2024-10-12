@@ -14,12 +14,6 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class WaitTerminateTest {
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     Thread t1, t2;
     Object monitor = new Object();
     int runningThreadNumber = 1;
@@ -35,11 +29,11 @@ public class WaitTerminateTest {
         @Override
         public void run() {
             for (int i = 0; ; i++) {
-                log(threadName + ":" + i);
+                log.info(threadName + ":" + i);
                 synchronized (monitor) {
                     try {
                         while (!threadName.equals("t" + runningThreadNumber)) {
-                            log("wait for thread t" + runningThreadNumber);
+                            log.info("wait for thread t" + runningThreadNumber);
                             monitor.wait();
                         }
                     } catch (InterruptedException e) {
@@ -51,7 +45,7 @@ public class WaitTerminateTest {
                     }
                     monitor.notifyAll();
                     if (shouldTerminate) {
-                        log("TERMINATED " + threadName + "!");
+                        log.info("TERMINATED " + threadName + "!");
                         return;
                     }
                 }
@@ -65,7 +59,7 @@ public class WaitTerminateTest {
         t1 = new Thread(testThread1);
         final TestThread testThread2 = new TestThread("t2");
         t2 = new Thread(testThread2);
-        log("Starting threads...");
+        log.info("Starting threads...");
         t1.start();
         t2.start();
 
@@ -84,14 +78,12 @@ public class WaitTerminateTest {
         });
         terminator.start();
 
-        log("Waiting threads to join...");
+        log.info("Waiting threads to join...");
         try {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
-
-        log.info(String.valueOf(buf));
     }
 }

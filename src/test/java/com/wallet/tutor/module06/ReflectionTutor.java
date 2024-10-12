@@ -1,14 +1,14 @@
 package com.wallet.tutor.module06;
 
-import com.wallet.tutor.Logger;
-import static com.wallet.tutor.Logger.log;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
-
+@Slf4j
 public class ReflectionTutor {
     static final String introspectClass = "com.wallet.market.tutor.module06.ExampleClass";
 
@@ -27,12 +27,12 @@ public class ReflectionTutor {
 
             Field[] fields = clazz.getDeclaredFields();
 
-            Arrays.stream(fields).map(Field::getName).forEach(Logger::log);
+            Arrays.stream(fields).map(Field::getName).forEach(log::info);
 
             Arrays.stream(methods)
                     .filter(method -> method.getDeclaringClass() == clazz)
                     .map(method -> method.getName() + ": " + method.toGenericString())
-                    .forEach(Logger::log);
+                    .forEach(log::info);
 
             print = clazz.getDeclaredMethod(array[0]);
             print.invoke(instance, (Object[]) null);
@@ -72,9 +72,9 @@ public class ReflectionTutor {
             }
             sb.insert(0, "constructor: " + constr.getName() + "(");
             sb.append(")");
-            log(sb.toString());
+            log.info(sb.toString());
         }
-        log("SuperClass: " + clazz.getSuperclass().getSimpleName());
+        log.info("SuperClass: " + clazz.getSuperclass().getSimpleName());
     }
 
     @Test

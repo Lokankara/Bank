@@ -7,10 +7,6 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class Wait2Test {
-    static StringBuffer buf = new StringBuffer();
-    static void log(String s) {
-        buf.append(s+"\n");
-    }
 
 	Thread t1, t2;
 	Object monitor = new Object();
@@ -41,13 +37,13 @@ public class Wait2Test {
 					try {
 						if (n==1) {
 							if (i>t2Counter) {
-								log("t1 is ahead with i=" + i + ", wait for t2Counter = " + t2Counter);
+								log.info("t1 is ahead with i=" + i + ", wait for t2Counter = " + t2Counter);
 								monitor.wait();
 							}
 						}
 						if (n==2) {
 							if (i>t1Counter) {
-								log("t2 is ahead with i=" + i + ", wait for t1Counter = " + t1Counter);
+								log.info("t2 is ahead with i=" + i + ", wait for t1Counter = " + t1Counter);
 								monitor.wait();
 							}
 						}
@@ -75,10 +71,8 @@ public class Wait2Test {
 			t1.join();
 			t2.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
-
-		log.info(String.valueOf(buf));
 		assertFalse(wrongCounter);
 	}
 
@@ -92,7 +86,7 @@ public class Wait2Test {
     int counterOccured = 0;
 
     private void logAndCheckCounter(String threadName, int c) {
-    	log(threadName + ":" + c);
+    	log.info(threadName + ":" + c);
         if (counter != c) {
         	wrongCounter = true;
         }

@@ -10,12 +10,6 @@ public class CyclicBarrierTest {
     Thread t1, t2, t3;
     CyclicBarrier barrier = new CyclicBarrier(3);
 
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     class TestThread implements Runnable {
         String threadName;
 
@@ -26,7 +20,6 @@ public class CyclicBarrierTest {
         @Override
         public void run() {
             for (int i = 0; i < 100; i++) {
-                log(threadName + ":" + i);
                 try {
                     barrier.await();
                 } catch (InterruptedException e) {
@@ -54,8 +47,7 @@ public class CyclicBarrierTest {
             t2.join();
             t3.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
-        log.info(String.valueOf(buf));
     }
 }

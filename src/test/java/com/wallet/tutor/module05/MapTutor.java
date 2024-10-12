@@ -1,14 +1,18 @@
 package com.wallet.tutor.module05;
 
-import java.util.*;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
-import com.wallet.tutor.Logger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-import static com.wallet.tutor.Logger.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import org.junit.jupiter.api.Test;
 
 /**
  * 1) Implement methods fillAnimalsLengthMap() and printMap().
@@ -16,7 +20,7 @@ import org.junit.jupiter.api.Test;
  * 2) Implement methods fillLengthAnimalsMap() and printMapOfSets()
  * Look at the result of the program execution.
  */
-
+@Slf4j
 public class MapTutor {
     Map<String, Integer> animalsLengthMap = new HashMap<String, Integer>();
     Map<Integer, Set<String>> lengthAnimalsMap = new HashMap<Integer, Set<String>>();
@@ -45,7 +49,7 @@ public class MapTutor {
     public void printMap(Map<?, ?> map) {
         map.keySet().stream()
                 .map(key -> String.format("%s:%s", key, map.get(key)))
-                .forEach(Logger::log);
+                .forEach(log::info);
     }
 
     /**
@@ -77,23 +81,23 @@ public class MapTutor {
     @Test
     public void testMap() {
         fillAnimalsLengthMap();
-        log("== printMap animalsLengthMap");
+        log.info("== printMap animalsLengthMap");
         printMap(animalsLengthMap);
 
-        log("== printMap treemap animalsLengthMap");
+        log.info("== printMap treemap animalsLengthMap");
         SortedMap<String, Integer> sortedMap = new TreeMap<String, Integer>(animalsLengthMap);
         printMap(sortedMap);
 
-        log("== print lengthAnimalsMap");
+        log.info("== print lengthAnimalsMap");
         fillLengthAnimalsMap();
         printMapOfSets(lengthAnimalsMap);
 
         SortedMap<Integer, Set<String>> sortedMap2 = new TreeMap<Integer, Set<String>>(lengthAnimalsMap);
 
-        log("== sortedMap headSet where key<6");
+        log.info("== sortedMap headSet where key<6");
         printMapOfSets(sortedMap2.headMap(6));
 
-        log("== sortedMap subMap 5..7");
+        log.info("== sortedMap subMap 5..7");
         printMapOfSets(sortedMap2.subMap(5, 7));
     }
 
@@ -112,5 +116,4 @@ public class MapTutor {
         assertTrue(lengthAnimalsMap.get(3).contains("Cow"));
         assertTrue(lengthAnimalsMap.get(5).contains("Goose"));
     }
-
 }

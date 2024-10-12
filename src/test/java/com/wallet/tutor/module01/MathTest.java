@@ -1,19 +1,22 @@
 package com.wallet.tutor.module01;
 
-import com.wallet.bank.utils.Logger;
-import static java.lang.StrictMath.round;
-import static java.lang.StrictMath.sqrt;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import static java.lang.StrictMath.round;
+import static java.lang.StrictMath.sqrt;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
-public class MathTutor {
+@Slf4j
+public class MathTest {
 
     /**
      * Returns a random age in the range from minAge to maxAge
@@ -35,7 +38,7 @@ public class MathTutor {
     @Test
     public void testGetHypotenuse() {
         double hypotenuse = getHypotenuse(2, 3);
-        Logger.log(hypotenuse);
+        log.info(String.valueOf(hypotenuse));
         assertEquals(3.61, hypotenuse, 0);
     }
 
@@ -68,12 +71,12 @@ public class MathTutor {
             max = Math.max(o, max);
             int variance = (int) (o - mean);
             varianceSum += variance * variance;
-            Logger.log("for age" + age + ":" + occurrences.get(age) + "occurrences, variance =" + variance);
+            log.info("for age" + age + ":" + occurrences.get(age) + "occurrences, variance =" + variance);
         }
         double deviation = Math.sqrt(varianceSum / sortedAges.size());
-        Logger.log("Standard deviation =" + deviation);
+        log.info("Standard deviation =" + deviation);
         double uniformity = (max - min) * 1d / ITERATIONS;
-        Logger.log("Uniformity of age distribution: " + uniformity);
+        log.info("Uniformity of age distribution: " + uniformity);
         assertEquals(MIN_AGE, sortedAges.get(0), 0);
         assertEquals(MAX_AGE, sortedAges.get(sortedAges.size() - 1), 0);
         assertTrue(uniformity < 0.2);

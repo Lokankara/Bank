@@ -1,13 +1,13 @@
 package com.wallet.tutor.module05;
 
-import static com.wallet.tutor.Logger.log;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
-import com.wallet.tutor.Logger;
-import org.junit.jupiter.api.Test;
-
+@Slf4j
 public class LinkedOrArrayListTutor {
     long start;
 
@@ -21,12 +21,8 @@ public class LinkedOrArrayListTutor {
         return animals[index];
     }
 
-    public void addAnimalsToList() {
-        arrayList.add(getRandomAnimal());
-    }
-
     public void nextTimeLog(String operation) {
-        log("Time of work for " + operation + ": " + (new Date().getTime() - start));
+        log.info("Time of work for " + operation + ": " + (new Date().getTime() - start));
         start = new Date().getTime();
     }
 

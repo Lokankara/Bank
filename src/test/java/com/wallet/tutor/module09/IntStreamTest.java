@@ -14,15 +14,6 @@ public class IntStreamTest {
         return IntStream.of(2, 3, 3, 4);
     }
 
-    public static void log(int i) {
-        log.info(String.valueOf(i));
-    }
-
-    public static void log(String i) {
-        log.info(i);
-    }
-
-
     /**
      * Find and print:
      * - max number in intStream
@@ -33,14 +24,14 @@ public class IntStreamTest {
     public void testIntStream() {
 
         int max = intStream().max().orElse(0);
-        log(max);
+        log.info(String.valueOf(max));
         assertEquals(max, 4);
 
         int avg = (int) intStream().average().orElse(0);
-        log(avg);
+        log.info(String.valueOf(avg));
         assertEquals(avg, 3);
         String distinct = intStream().distinct().mapToObj(i -> String.valueOf(i)).collect(Collectors.joining(","));
-        log(distinct);
+        log.info(distinct);
         assertEquals(distinct, "2,3,4");
 
     }

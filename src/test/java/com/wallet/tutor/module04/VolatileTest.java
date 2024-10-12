@@ -14,10 +14,6 @@ public class VolatileTest {
 
     static StringBuffer buf = new StringBuffer();
 
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     @Test
     public void testVolatile() {
         Thread t1 = new Thread(new Runnable() {
@@ -26,7 +22,7 @@ public class VolatileTest {
                 while (running) {
                     counter++;
                 }
-                log("Thread 1 finished. Counted up to " + counter);
+                log.info("Thread 1 finished. Counted up to " + counter);
             }
         });
 
@@ -36,7 +32,7 @@ public class VolatileTest {
                     Thread.sleep(100);
                 } catch (InterruptedException ignored) {
                 }
-                log("Thread 2 finishing");
+                log.info("Thread 2 finishing");
                 running = false;
             }
         });

@@ -1,7 +1,5 @@
 package com.wallet.tutor.module03;
 
-import static com.wallet.tutor.module03.CheckCounterWaitTest.log;
-
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
@@ -72,7 +70,7 @@ public class WaitTest {
         @Override
         public void run() {
             if (count % 10 == 0 && count > 0)
-                log(String.format("%s:%d", threadName, count));
+                log.info(String.format("%s:%d", threadName, count));
             count++;
         }
     }
@@ -91,10 +89,8 @@ public class WaitTest {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
-
-        log.info(String.valueOf(buf));
         assertFalse(wrongCounter);
     }
 
@@ -108,7 +104,7 @@ public class WaitTest {
     int counterOccured = 0;
 
     private void logAndCheckCounter(String threadName, int c) {
-        log(threadName + ":" + c);
+        log.info(threadName + ":" + c);
         if (counter != c) {
             wrongCounter = true;
         }

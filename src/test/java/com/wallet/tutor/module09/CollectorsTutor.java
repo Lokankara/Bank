@@ -1,6 +1,5 @@
 package com.wallet.tutor.module09;
 
-import com.wallet.tutor.Logger;
 import com.wallet.tutor.module09.model.Gender;
 import com.wallet.tutor.module09.model.Person;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,15 +36,13 @@ import static java.util.stream.Collectors.joining;
 public class CollectorsTutor {
 
     public static void main(String... args) {
-
         List<Person> persons = new ArrayList<>();
-
         try (
                 BufferedReader reader =
                         new BufferedReader(
                                 new InputStreamReader(
-                                        CollectorsTutor.class.getResourceAsStream("people.txt")));
-
+                                        Objects.requireNonNull(
+                                                CollectorsTutor.class.getResourceAsStream("people.txt"))));
                 Stream<String> stream = reader.lines();
         ) {
 
@@ -64,43 +66,29 @@ public class CollectorsTutor {
         log.info(opt.toString());
 
         // Find a person with a maximal age 
-        Optional<Person> opt2 =
-                persons.stream().max(Comparator.comparing(Person::getAge));
+        Optional<Person> opt2 = persons.stream().max(Comparator.comparing(Person::getAge));
         log.info(opt2.toString());
 
         // Group persons by their ages 
-        Map<Integer, String> map =
-                persons.stream()
-                        .collect(
-                                Collectors.groupingBy(
-                                        Person::getAge,
-                                        Collectors.mapping(
-                                                Person::getName,
-                                                joining(", ")
-                                        )
-                                )
-                        );
-        log.info(map.toString());
+        Map<Integer, String> map = persons.stream()
+                .collect(Collectors.groupingBy(
+                                Person::getAge,
+                                Collectors.mapping(Person::getName, joining(", "))
+                        )
+                );
 
         // 1) Create a map which prints amount of person of each age
         //  use stream.collect(Collectors.groupingBy(Function, Collectors.mapping(Function, Collectors.counting())))
         Map<Integer, Long> collect = persons.stream()
-                .collect(Collectors
-                        .groupingBy(
-                                Person::getAge,
-                                Collectors.counting()));
-        Logger.log(collect);
+                .collect(Collectors.groupingBy(Person::getAge, Collectors.counting()));
+        log.info(String.valueOf(collect));
 
         // 2) Create a map Gender->String with gender as keys and comma-separated names as values
         // 	use stream.collect(Collectors.groupingBy(Function, Collectors.mapping(Function, Collectors.joining(","))))
         Map<Gender, String> byGender = persons.stream()
-                .collect(Collectors
-                        .groupingBy(
-                                Person::getGender,
-                                Collectors.mapping(
-                                        Person::getName,
-                                        joining(","))));
-        Logger.log(byGender);
+                .collect(Collectors.groupingBy(Person::getGender,
+                        Collectors.mapping(Person::getName, joining(","))));
+        log.info(String.valueOf(byGender));
 
         // 3) Calculate and print the average age of females
         // 	use stream.filter(Predicate).mapToInt(Function).average()
@@ -110,33 +98,31 @@ public class CollectorsTutor {
                 .average()
                 .orElseThrow();
 
-        Logger.log(average);
+        log.info(String.valueOf(average));
 
         // 4) Create a map with genders as keys and average ages as values
         // 	use stream.collect(Collectors.groupingBy(Function, Collectors.averagingInt(Function))
         Map<Gender, Double> genders = persons.stream()
-                .collect(Collectors
-                        .groupingBy(
-                                Person::getGender,
-                                Collectors.averagingInt(Person::getAge)));
+                .collect(Collectors.groupingBy(
+                        Person::getGender,
+                        Collectors.averagingInt(Person::getAge)));
 
-        Logger.log(genders);
+        log.info(String.valueOf(genders));
 
         // 5) Print the list of persons in alphabetical order of names
         List<Person> abc = persons.stream()
                 .sorted(Comparator.comparing(Person::getName))
-                .collect(Collectors.toList());
+                .toList();
 
-        Logger.log(abc);
+        log.info(String.valueOf(abc));
 
         // 6) Print the list of persons in order of gender, then name:
         // 	use stream.sorted(Comparator.comparing(Function).thenComparing(Function)
         List<Person> sorted = persons.stream()
-                .sorted(Comparator
-                        .comparing(Person::getGender)
+                .sorted(Comparator.comparing(Person::getGender)
                         .thenComparing(Person::getName))
-                .collect(Collectors.toList());
+                .toList();
 
-        Logger.log(sorted);
+        log.info(String.valueOf(sorted));
     }
 }

@@ -6,12 +6,6 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class Thread2Test {
 
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s).append("\n");
-    }
-
     static class TestThread implements Runnable {
         String threadName;
 
@@ -22,7 +16,6 @@ public class Thread2Test {
         @Override
         public void run() {
             for (int i = 0; i < 100; i++) {
-                log(threadName + ":" + i);
                 Thread.yield();
             }
         }
@@ -42,9 +35,8 @@ public class Thread2Test {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         log.info("Finished");
-        log.info(String.valueOf(buf));
     }
 }

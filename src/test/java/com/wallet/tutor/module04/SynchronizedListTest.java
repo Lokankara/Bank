@@ -22,10 +22,6 @@ public class SynchronizedListTest {
     static boolean failed = false;
     static StringBuilder buf = new StringBuilder();
 
-    static void log(String s) {
-        buf.append(s).append("\n");
-    }
-
     static void err(String s) {
         buf.append("<span style='color:red'><b>" + s + "</b></span>\n");
         failed = true;
@@ -68,7 +64,7 @@ public class SynchronizedListTest {
             builder.append(iterator.next())
                     .append(" ");
         }
-        log(builder.toString());
+        log.info(builder.toString());
     }
 
     @Test

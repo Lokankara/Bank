@@ -1,14 +1,13 @@
 package com.wallet.tutor.module04;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.Date;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
 
 /**
  * Note that reading operation is slow (with sleep - it imitates the access to the slow resource).
@@ -20,16 +19,10 @@ import org.junit.jupiter.api.Test;
 @Slf4j
 public class ReadWriteLockTest {
     Thread t1, t2, t3, t4;
-    Object monitor = new Object();
+    final Object monitor = new Object();
     int runningThreadNumber = 1;
-    StringBuilder stringBuilder = new StringBuilder("");
+    StringBuilder stringBuilder = new StringBuilder();
     public static long ITERATIONS = 1000;
-
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
 
     public Lock writeLock() {
         return null;
@@ -50,7 +43,7 @@ public class ReadWriteLockTest {
 
         @Override
         public void run() {
-            synchronized (lock) {
+            synchronized (monitor) {
                 for (int i = 0; i < ITERATIONS; i++) {
                     if (lock.tryLock()) {
                         lock.lock();
@@ -81,13 +74,13 @@ public class ReadWriteLockTest {
             for (int i = 0; i < 5; i++) {
                 if (lock.tryLock()) {
                     lock.lock();
-                    log(threadName + " has acquired the lock");
+                    log.info(threadName + " has acquired the lock");
                     String s = stringBuilder.toString();
                     int len = s.length();
                     int l = len > 50 ? len - 50 : 0;
-                    log(threadName + ":len = " + len + ":" + s.substring(l));
+                    log.info(threadName + ":len = " + len + ":" + s.substring(l));
                     Thread.yield();
-                    log(threadName + " has released the lock");
+                    log.info(threadName + " has released the lock");
                     try {
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
@@ -128,12 +121,10 @@ public class ReadWriteLockTest {
             t3.join();
             t4.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         long time = new Date().getTime() - start;
-        log("Time of work: " + time);
-
-        log.info(String.valueOf(buf));
+        log.info("Time of work: " + time);
         assertTrue(time < 1000);
     }
 }

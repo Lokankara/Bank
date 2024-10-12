@@ -2,7 +2,7 @@ package com.wallet.tutor.module09.model;
 
 public enum Gender {
 	Female("f"), Male("m");
-	String shortcut;
+	private final String shortcut;
 	
 	Gender(String s) {
 		shortcut = s;

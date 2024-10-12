@@ -8,6 +8,7 @@ import com.wallet.bank.email.EmailService;
 import com.wallet.bank.exceptions.ClientExistsException;
 import com.wallet.bank.utils.ClientRegistrationListener;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
@@ -23,6 +24,7 @@ public class Bank implements Serializable {
     private static final long serialVersionUID = -4157871135257285214L;
     private final Set<Client> clients = new HashSet<>();
     private final ArrayList<ClientRegistrationListener> listeners = new ArrayList<>();
+    @Setter
     private EmailService emailService;
 
     private final Client admin = new Client("Admin", Gender.MALE);
@@ -44,11 +46,6 @@ public class Bank implements Serializable {
         system.setPhoneAreaCode("0121");
         system.setPhoneNumber("9875043");
 
-
-    }
-
-    public void setEmailService(EmailService emailService) {
-        this.emailService = emailService;
     }
 
     public void addClient(final Client client) throws ClientExistsException {

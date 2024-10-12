@@ -24,8 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
  * Then print() will be working with its own copy of list, which will not be changing.
  */
 public class SynchronizedTest {
-
-    Object monitor = new Object();
+    private final Object monitor = new Object();
     static boolean failed = false;
     static StringBuffer buf = new StringBuffer();
 

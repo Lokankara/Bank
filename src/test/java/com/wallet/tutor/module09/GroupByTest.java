@@ -28,7 +28,6 @@ public class GroupByTest {
                                 Object::toString,
                                 Collectors.counting()));
 
-        log.info(collect.toString());
         assertEquals(collect.toString(), "{George=1, John=2, Ringo=1, Paul=3}");
 
         // 2) Create a map (string length->set of strings of this length)
@@ -39,7 +38,6 @@ public class GroupByTest {
                                 String::length,
                                 Collectors.toSet()));
 
-        log.info(collect2.toString());
         assertEquals(collect2.toString(), "{4=[John, Paul], 5=[Ringo], 6=[George]}");
 
         // 3) Create a map (string length->string of comma separated values of this length)
@@ -50,8 +48,6 @@ public class GroupByTest {
                         .groupingBy(
                                 String::length,
                                 Collectors.joining(",")));
-
-        log.info(collect3.toString());
         assertEquals(collect3.toString(), "{4=John,Paul, 5=Ringo, 6=George}");
     }
 

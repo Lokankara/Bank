@@ -11,10 +11,6 @@ import org.junit.jupiter.api.Test;
 public class WaitTerminate2Test {
     static StringBuffer buf = new StringBuffer();
 
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     Thread t1, t2;
     Object monitor = new Object();
     int runningThreadNumber = 1;
@@ -30,16 +26,16 @@ public class WaitTerminate2Test {
         @Override
         public void run() {
             for (int i = 0; ; i++) {
-                log(threadName + ":" + i);
+                log.info(threadName + ":" + i);
                 synchronized (monitor) {
                     try {
                         int waitingCycle = 0;
                         while (!threadName.equals("t" + runningThreadNumber)) {
                             if (waitingCycle > 0)
-                                log("wait for thread t" + runningThreadNumber + ", waiting cycle:" + waitingCycle);
+                                log.info("wait for thread t" + runningThreadNumber + ", waiting cycle:" + waitingCycle);
                             monitor.wait(100);
                             if (waitingCycle++ >= 10) {
-                                log("EXIT from " + threadName + ": too long waiting...");
+                                log.info("EXIT from " + threadName + ": too long waiting...");
                                 return;
                             }
                         }
@@ -53,7 +49,7 @@ public class WaitTerminate2Test {
 
                     monitor.notifyAll();
                     if (shouldTerminate) {
-                        log("TERMINATED " + threadName + "!");
+                        log.info("TERMINATED " + threadName + "!");
                         return;
                     }
                 }
@@ -67,7 +63,7 @@ public class WaitTerminate2Test {
         t1 = new Thread(testThread1);
         final TestThread testThread2 = new TestThread("t2");
         t2 = new Thread(testThread2);
-        log("Starting threads...");
+        log.info("Starting threads...");
         t1.start();
         t2.start();
 
@@ -84,15 +80,13 @@ public class WaitTerminate2Test {
         });
         terminator.start();
 
-        log("Waiting threads to join...");
+        log.info("Waiting threads to join...");
         try {
             t1.join();
             t2.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
-
-        log.info(String.valueOf(buf));
     }
 
 

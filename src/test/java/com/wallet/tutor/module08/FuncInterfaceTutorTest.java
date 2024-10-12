@@ -1,7 +1,6 @@
 package com.wallet.tutor.module08;
 
 import com.wallet.bank.domain.Gender;
-import com.wallet.tutor.Logger;
 import com.wallet.tutor.module08.defaultInterfaces.Comparator;
 import com.wallet.tutor.module08.defaultInterfaces.Consumer;
 import com.wallet.tutor.module08.defaultInterfaces.FileFilter;
@@ -14,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -101,7 +99,6 @@ class FuncInterfaceTutorTest {
     @Test
     @DisplayName("how to get persons high age and starts with J")
     public void shouldGetPersonsHighAgeAndStartsWithA() {
-        log.info(roster.toString());
         PersonPredicate<Person> isAdult = person -> person.getAge() >= 18;
         PersonPredicate<Person> startsWith = person -> person.getName().startsWith("J");
 
@@ -127,23 +124,14 @@ class FuncInterfaceTutorTest {
 
     @Test
     public void testImplStatic() {
-        List<String> result = new ArrayList<>();
-
-        Consumer<String> consumer = Logger::log;
+        Consumer<String> consumer = log::info;
         consumer.accept("String");
-
         Arrays.sort(rosterAsArray, Person::compareTo);
-
         Arrays.stream(rosterAsArray).map(Person::getName).forEach(consumer::accept);
-
         String[] stringArray = {"Barbara", "James", "Mary", "John", "Patricia", "Robert", "Michael", "Linda"};
-
         Arrays.sort(stringArray, String::compareToIgnoreCase);
-
         Arrays.stream(stringArray).forEach(consumer::accept);
-
         Set<Person> rosterSetLambda = transferElements(roster, HashSet::new);
-
         for (Person person : rosterSetLambda) {
             consumer.accept(person.getBirthday().toString());
         }
@@ -154,40 +142,33 @@ class FuncInterfaceTutorTest {
     void testInterfaces() {
 
         PersonPredicate<Integer> isAdult = age -> age >= 18;
-        Logger.log(isAdult.test(10));
-
+        log.info(String.valueOf(isAdult.test(10)));
         Supplier<String> hi = () -> "hi";
-
-        Logger.log(hi.get());
-
-        Consumer<String> printer = p -> Logger.log(String.format("Printed %s", p));
-
+        log.info(hi.get());
+        Consumer<String> printer = p -> log.info(String.format("Printed %s", p));
         printer.accept(hi.get());
 
         Comparator<String> comparator = (String a, String b) -> Integer.compare(a.length(), b.length());
         Comparator<String> compare = (a, b) -> Integer.compare(a.length(), b.length());
 
-        Logger.log(compare.compare("compare.comparator.compare", "comparator.compare"));
-        Logger.log(comparator.compare("comparator.compare", "comparator.compare.comparator"));
+        log.info(String.valueOf(compare.compare("compare.comparator.compare", "comparator.compare")));
+        log.info(String.valueOf(comparator.compare("comparator.compare", "comparator.compare.comparator")));
 
         Function<String, String> function = String::toLowerCase;
         function.apply(hi.get());
-
         Comparator<Integer> integerComparator = Integer::compare;
-        Logger.log(integerComparator.compare(30, 50));
+        log.info(String.valueOf(integerComparator.compare(30, 50)));
     }
 
     @Test
     void testFileFilter() {
         FileFilter fileFilter = pathname -> pathname.getName().endsWith(suffix);
         FileFilter filter = (File file) -> file.getName().endsWith(suffix);
-
         Runnable r = () -> {
             for (int i = 0; i < max; i++) {
                 log.info(suffix);
             }
         };
-
         r.run();
     }
 }

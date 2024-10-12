@@ -37,15 +37,8 @@ public class ClientBirthdaysTest {
 
     @Test
     public void clientsBirthdaysByMonth() {
-        for (Client client : clients) {
-            log.info(client.getName() + " " + client.getBirthday() + ": " + client.daysUntilBirthday());
-        }
-
-        Map<Integer, List<Client>> clientsBirthdaysByMonth = clients
-                .stream()
-                .collect(Collectors.groupingBy(Client::getBirthdayMonth));
-
-        log.info(clientsBirthdaysByMonth.toString());
+        clients.stream().map(Client::getName).forEach(log::info);
+        Map<Integer, List<Client>> clientsBirthdaysByMonth = clients.stream().collect(Collectors.groupingBy(Client::getBirthdayMonth));
 
         Map<Integer, List<Client>> expectedClients = new HashMap<>();
         expectedClients.put(1, List.of(new Client("Client4", Gender.MALE, LocalDate.of(1992, 1, 14))));

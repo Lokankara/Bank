@@ -7,17 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 @Slf4j
 public class Synchronized2Test {
-
-    static StringBuffer buf = new StringBuffer();
     Integer counter = 0;
-    Object monitor = new Object();
-
-    static void log(String s) {
-        buf.append(s).append("\n");
-    }
+    private final Object monitor = new Object();
 
     class TestThread implements Runnable {
         String threadName;
@@ -33,7 +26,6 @@ public class Synchronized2Test {
                     counter++;
                     Thread.yield();
                 }
-                log(threadName + ":" + i + ":" + counter);
             }
         }
     }
@@ -54,10 +46,8 @@ public class Synchronized2Test {
                 threads.get(i).join();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
-        log.info(String.valueOf(buf));
-        log.info("counter = " + counter);
         assertEquals(1000000, (int) counter);
     }
 }

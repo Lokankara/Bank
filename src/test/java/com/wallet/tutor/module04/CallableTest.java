@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 /**
- * Interface Callable <T> allows to create threads that return the execution result T.
+ * Interface Callable allows to create threads that return the execution result.
  * 1) Try to run the class and look at the results and execution time. Replace the call of newSingleThreadExecutor () to newFixedThreadPool() and compare the execution time.
  * 2) Instead of executorService.execute() use executorService.submit(). Save results in the array of Future objects.
  * 3) Try to stop the execution of the first 5 streams using the method cancel(). Handle CancellationException.
@@ -24,13 +24,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class CallableTest {
-    static StringBuffer buf = new StringBuffer();
 
-    static void log(String s) {
-        buf.append(s).append("\n");
-    }
-
-    public class StringGenerator implements Callable<String> {
+    public static class StringGenerator implements Callable<String> {
 
         public String call() throws Exception {
             String[] allStrings = {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
@@ -64,7 +59,7 @@ public class CallableTest {
             try {
                 resultStr.append(result.get()).append(" ");
             } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
+                log.error(e.getMessage());
             }
         }
         log.info(resultStr.toString());
@@ -73,14 +68,10 @@ public class CallableTest {
         try {
             executorService.awaitTermination(1, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         long time = new Date().getTime() - start;
-
         log.info("Time of work: " + time);
-
-        log.info(String.valueOf(buf));
     }
-
 }

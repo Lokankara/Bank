@@ -72,11 +72,7 @@ public class FuncInterfaceTutor {
     }
 
     public Info createInfo(Supplier<Info> s) {
-        Info info = s.get();
-        // do some operations on info
-        log.info(info.get());
-
-        return info;
+        return s.get();
     }
     public static void main(String[] args) {
         Func f = () -> {
@@ -90,25 +86,20 @@ public class FuncInterfaceTutor {
         };
         log.info(String.valueOf(f2.exec("1")));
 
-        // use static method reference
         Func f3 = FuncInterfaceTutor::testImplStatic;
         f3.test();
 
-        // use non-static method reference
         FuncInterfaceTutor tutor = new FuncInterfaceTutor();
         tutor.testImpl();
         Func f4 = tutor::testImpl;
         f4.test();
 
-        // use arbitary object method reference
-        tutor.printLength("Hello", (s) -> s.length());
+        tutor.printLength("Hello", String::length);
         tutor.printLength("Hi", String::length);
 
-        // use constructor method reference
         tutor.createInfo(MyInfo::new);
-        tutor.createInfo(() -> new MyInfo());
+        tutor.createInfo(MyInfo::new);
 
-        // use arbitary object method reference for info object
         log.info(getInfo(new MyInfo(), Info::get));
         log.info(getInfo(new MyInfo(), Info::random));
         Info[] infos = {new MyInfo(), new MyInfo()};

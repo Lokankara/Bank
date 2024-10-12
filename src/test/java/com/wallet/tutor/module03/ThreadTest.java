@@ -5,11 +5,6 @@ import org.junit.jupiter.api.Test;
 
 @Slf4j
 public class ThreadTest {
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
 
     static class TestThread implements Runnable {
         String threadName;
@@ -21,7 +16,7 @@ public class ThreadTest {
         @Override
         public void run() {
             for (int i = 0; i < 100; i++) {
-                log(threadName + ":" + i);
+                log.info(threadName + ":" + i);
                 Thread.yield();
             }
         }
@@ -42,6 +37,5 @@ public class ThreadTest {
             e.printStackTrace();
         }
         log.info("Finished");
-        log.info(String.valueOf(buf));
     }
 }

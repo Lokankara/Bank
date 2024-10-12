@@ -1,11 +1,12 @@
 package com.wallet.tutor.module08;
 
-import com.wallet.tutor.Logger;
 import com.wallet.tutor.module08.defaultInterfaces.Function;
 import com.wallet.tutor.module08.defaultInterfaces.Supplier;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
 
+@Slf4j
 public class LambdaTest {
 
     public static <T, SOURCE extends Collection<T>, DEST extends Collection<T>>
@@ -39,11 +40,10 @@ public class LambdaTest {
 
     public static void main(String[] args) {
 
-
         LambdaTest lambdaTest = new LambdaTest();
         String s = lambdaTest.process("hello", LambdaTest::addQuestion);
-        Logger.log(lambdaTest.process2(lambdaTest, LambdaTest::addExclamation2));
-        Logger.log(s);
-        Logger.log(lambdaTest.process("hello", x -> x + "?"));
+        log.info(lambdaTest.process2(lambdaTest, LambdaTest::addExclamation2));
+        log.info(s);
+        log.info(lambdaTest.process("hello", x -> x + "?"));
     }
 }

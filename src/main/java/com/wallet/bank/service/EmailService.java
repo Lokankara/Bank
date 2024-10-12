@@ -1,14 +1,18 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.utils.Logger;
 import com.wallet.bank.domain.Email;
 import com.wallet.bank.domain.Queue;
 import com.wallet.bank.exceptions.BankException;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.Serializable;
 
+@Slf4j
 public class EmailService implements Runnable, Serializable {
     private final Queue<Email> emailQueue = new Queue<>();
     private final transient Thread thread;
+    @Getter
     private int emailCounter = 0;
     private volatile boolean close;
 
@@ -51,12 +55,8 @@ public class EmailService implements Runnable, Serializable {
     private void increase(Email email) {
         if ((email != null)) {
             emailCounter++;
-            Logger.log(String.format("%s has been sent", email));
+            log.info(String.format("%s has been sent", email));
         }
-    }
-
-    public int getEmailCounter() {
-        return emailCounter;
     }
 
     public void sendNotificationEmail(Email email) throws BankException {

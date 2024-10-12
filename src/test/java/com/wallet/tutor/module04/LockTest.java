@@ -23,10 +23,6 @@ public class LockTest {
 
     static StringBuffer buf = new StringBuffer();
 
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     class WritingThread implements Runnable {
         String threadName;
         Lock lock;
@@ -68,7 +64,7 @@ public class LockTest {
                 String s = stringBuilder.toString();
                 int len = s.length();
                 int l = len > 50 ? len - 50 : 0;
-                log(len + ":" + s.substring(l));
+                log.info(len + ":" + s.substring(l));
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -95,15 +91,12 @@ public class LockTest {
             t2.join();
             t3.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
 
         long time = new Date().getTime() - start;
-        log("Time of work: " + time);
+        log.info("Time of work: " + time);
 
-        log.info(String.valueOf(buf));
-
-        // Analyze buf to check the correctness
         String[] lines = buf.toString().split("\n");
         for (int i = 0; i < lines.length - 1; i++) {
             String line = lines[i];

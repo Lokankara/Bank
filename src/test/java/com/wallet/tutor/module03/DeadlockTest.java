@@ -20,12 +20,6 @@ public class DeadlockTest {
     Account account1 = new Account(100);
     Account account2 = new Account(50);
 
-
-    static void log(String s) {
-        buf.append(s).append("\n");
-        log.info(String.valueOf(buf));
-    }
-
     static class Account {
         double balance;
         int id;
@@ -56,7 +50,7 @@ public class DeadlockTest {
     public void testDeadlock() {
         t1 = new Thread(() -> IntStream.range(0, 200).forEach(i -> {
             account1.transfer(account2, 30);
-            log("t1: " + i);
+            log.info("t1: " + i);
             Thread.yield();
             try {
                 Thread.sleep(10);
@@ -67,14 +61,14 @@ public class DeadlockTest {
 
         t2 = new Thread(() -> IntStream.range(0, 200).forEach(i -> {
             account2.transfer(account1, 30);
-            log("t2: " + i);
+            log.info("t2: " + i);
         }));
 
-        log("Starting threads");
+        log.info("Starting threads");
         t1.start();
         t2.start();
 
-        log("Waiting for threads");
+        log.info("Waiting for threads");
         try {
             t1.join();
             t2.join();
@@ -82,6 +76,6 @@ public class DeadlockTest {
             e.printStackTrace();
         }
 
-        log(buf.toString());
+        log.info(buf.toString());
     }
 }

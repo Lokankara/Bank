@@ -72,17 +72,13 @@ public class PriorityQueueTest {
                     if (order.priority && orderNum == 0) {
                         priorityAhead = true;
                     }
-                    log(order.toString());
+                    log.info(order.toString());
                     orderNum++;
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-    }
-
-    static void log(String s) {
-        buf.append(s + "\n");
     }
 
     boolean priorityAhead = false;

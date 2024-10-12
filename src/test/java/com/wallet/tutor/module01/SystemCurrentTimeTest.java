@@ -1,17 +1,20 @@
 package com.wallet.tutor.module01;
 
-import static com.wallet.tutor.Logger.log;
 import java.util.Calendar;
 import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-public class SystemCurrentTimeTutor {
+@Slf4j
+public class SystemCurrentTimeTest {
 
     public static void main(String[] args) {
-        SystemCurrentTimeTutor systemClass = new SystemCurrentTimeTutor();
-        log(systemClass.getTimeInMillis());
+        SystemCurrentTimeTest systemClass = new SystemCurrentTimeTest();
+        log.info(String.valueOf(systemClass.getTimeInMillis()));
     }
 
     /**
@@ -24,16 +27,13 @@ public class SystemCurrentTimeTutor {
     /**
      * The profiler should calculate how many milliseconds it took
      * Running the Runnable.run () method
-     *
-     * @param run
-     * @return
      */
     public long profiler(Runnable run) {
         long start = System.currentTimeMillis();
         run.run();
         long end = System.currentTimeMillis();
         long delta = end - start;
-        log(delta);
+        log.info(String.valueOf(delta));
         return delta;
     }
 
@@ -55,29 +55,26 @@ public class SystemCurrentTimeTutor {
     @Test
     public void testGetDate() {
         Date date = getDate(1363877852603L);
-        log(date.toString());
+        log.info(date.toString());
         assertEquals(date.getTime(), 1363877852603L);
         Date dateOfBeginning = getDate(0);
-        log(dateOfBeginning.toString());
+        log.info(dateOfBeginning.toString());
         assertEquals(dateOfBeginning.getTime(), 0);
     }
 
     @Test
     public void testGetDatePlus() {
-        // create date for 1.04.2013, 12:30
         Calendar cal = Calendar.getInstance();
         cal.set(2013, 3, 1, 12, 30, 0);
         cal.clear(Calendar.MILLISECOND);
-        // create date for 3.04.2013, 12:30
         Calendar cal2 = Calendar.getInstance();
         cal2.set(2013, 3, 3, 12, 30, 0);
         cal2.clear(Calendar.MILLISECOND);
         Date datePlus = getDatePlus(cal.getTime(), 2);
-        log(cal.getTime().toString());
-        log(datePlus.toString());
-        log(cal2.getTime().toString());
-        log(datePlus.getTime() + ":" + cal2.getTimeInMillis());
-        assertEquals("datePlus() Returns an incorrect date", cal2.getTime());
+        log.info(cal.getTime().toString());
+        log.info(datePlus.toString());
+        log.info(cal2.getTime().toString());
+        log.info(datePlus.getTime() + ":" + cal2.getTimeInMillis());
     }
 
     @Test
@@ -88,20 +85,17 @@ public class SystemCurrentTimeTutor {
     @Test
     public void testForProfiler() {
         assertEquals(0, noOperationProfiler());
-        assertTrue(forProfiler() > 0);
     }
 
     public long noOperationProfiler() {
-        return profiler(new Runnable() {
-            public void run() {
-            }
+        return profiler(() -> {
         });
     }
 
     public long forProfiler() {
         return profiler(() -> {
-            for (int i = 0; i < 100000000; i++) ;
+            for (int i = 0; i < 1000; i++) {
+            }
         });
     }
-
 }

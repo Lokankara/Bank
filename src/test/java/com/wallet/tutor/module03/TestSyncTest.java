@@ -1,8 +1,5 @@
 package com.wallet.tutor.module03;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class TestSyncTest {
     public static void main(String[] args) {
 
@@ -15,10 +12,6 @@ public class TestSyncTest {
         int newPriority = Math.min(oldPriority+1,
                 Thread.MAX_PRIORITY);
         a.setPriority(newPriority);
-
-        log.info(String.valueOf(oldPriority));
-        log.info(String.valueOf(newPriority));
-
         a.start();
         b.start();
     }

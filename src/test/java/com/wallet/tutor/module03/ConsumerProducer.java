@@ -1,31 +1,30 @@
 package com.wallet.tutor.module03;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ConsumerProducer {
     private int count;
     private String message;
     private boolean request;
+    private final Object monitor = new Object();
 
     public ConsumerProducer(String message, boolean request) {
         this.message = message;
         this.request = request;
     }
 
-    // monitor - any SHARED object
-    // of waiting and notifier threads
-    Object monitor = new Object();
     boolean waitingThreadCanTryAgain = false;
 
     public synchronized void consume() {
-// keep waiting if nothing is produced to consume
         while (count == 0) {
             try {
                 wait();
-                // give up lock and wait
             } catch (InterruptedException e) {
-// keep trying
+                log.error(e.getMessage());
             }
         }
-        count--; // consume
+        count--;
     }
 
     public synchronized void produce() {
@@ -34,27 +33,25 @@ public class ConsumerProducer {
     }
 
     public synchronized String retrieveMessage() {
-// keep waiting if nothing is produced to consume
         while (request == false) {
             try {
-                wait(); // give up lock and wait
+                wait();
             } catch (InterruptedException e) {
-// keep trying
+                log.error(e.getMessage());
             }
         }
-        request = false; // consume
+        request = false;
         return message;
     }
 
     public synchronized void storeMessage(String message) {
-        this.message = message; // produce
+        this.message = message;
         request = true;
-        notify(); // notify waiting threads to resume
+        notify();
     }
 
     public synchronized void waitAndNotify() {
 
-        // waiting thread code:
         synchronized (monitor) {
             while (!waitingThreadCanTryAgain) {
                 try {
@@ -65,7 +62,6 @@ public class ConsumerProducer {
             }
         }
 
-// notifier thread code:
         synchronized (monitor) {
             waitingThreadCanTryAgain = true;
             monitor.notify();

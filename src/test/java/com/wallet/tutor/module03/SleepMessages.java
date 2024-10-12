@@ -14,7 +14,6 @@ public class SleepMessages {
         };
         for (int i = 0; i < importantInfo.length; i++) {
             Thread.sleep(1000);
-            log.info(importantInfo[i]);
         }
         try {
             Thread.sleep(100);

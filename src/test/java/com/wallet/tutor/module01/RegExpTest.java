@@ -1,15 +1,14 @@
 package com.wallet.tutor.module01;
 
-import static com.wallet.tutor.Logger.log;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.wallet.tutor.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-
-public class RegExpTutor {
+@Slf4j
+public class RegExpTest {
     private String charRegEx = "a-zA-Z";
 
     public Email getEmail(String emailString) {
@@ -38,7 +37,7 @@ public class RegExpTutor {
      */
     public String[] getAnimalsArray(String animalsString) {
 
-        ArrayCopyTutor copy = new ArrayCopyTutor();
+        ArrayCopyTest copy = new ArrayCopyTest();
 
         String regexPattern = String.format(" ([%s]{1,64})([\\.,])", charRegEx);
 
@@ -47,7 +46,7 @@ public class RegExpTutor {
         while (matcher.find()) {
             String found = matcher.group(1);
             copy.addAnimal(found);
-            Logger.log(found);
+            log.info(found);
         }
 
         return copy.animals;
@@ -76,10 +75,9 @@ public class RegExpTutor {
         assertArrayEquals(animals, getAnimalsArray(animalsString));
     }
 
-    class Email {
+    static class Email {
         String name;
         String domainName;
         String domainZone;
     }
-
 }

@@ -19,12 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ExecutorServiceTest {
     Set<String> currentThreads = Collections.synchronizedSet(new HashSet<>());
 
-    static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     public void sleep(long timeout) {
         try {
             Thread.sleep(timeout);
@@ -39,7 +33,7 @@ public class ExecutorServiceTest {
         for (String str : threads) {
             currentThreadsStr.append(str).append(", ");
         }
-        log("size:" + currentThreads.size() +
+        log.info("size:" + currentThreads.size() +
                 ", current thread pool: " + currentThreadsStr.toString());
     }
 
@@ -82,13 +76,12 @@ public class ExecutorServiceTest {
             executorService.awaitTermination(1, TimeUnit.SECONDS);
 //			executorService.awaitTermination(1, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error(e.getMessage());
         }
         executorService.shutdownNow();
 
         long time = new Date().getTime() - start;
         log.info("Time of work:" + time);
-        log.info(String.valueOf(buf));
         assertTrue(currentThreads.isEmpty());
     }
 }

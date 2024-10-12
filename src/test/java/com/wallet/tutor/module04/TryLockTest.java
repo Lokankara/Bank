@@ -24,10 +24,6 @@ public class TryLockTest {
 
     static StringBuffer buf = new StringBuffer();
 
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
-
     class WritingThread implements Runnable {
         String threadName;
         Lock lock;
@@ -71,7 +67,7 @@ public class TryLockTest {
                 String s = stringBuilder.toString();
                 int len = s.length();
                 int l = len > 50 ? len - 50 : 0;
-                log(len + ":" + s.substring(l));
+                log.info(len + ":" + s.substring(l));
                 lock.unlock();
                 Thread.yield();
             }
@@ -97,9 +93,7 @@ public class TryLockTest {
             log.error(e.getMessage());
         }
         long time = new Date().getTime() - start;
-        log("Time of work:" + time);
-
-        log.info(String.valueOf(buf));
+        log.info("Time of work:" + time);
 
         String[] lines = buf.toString().split("\n");
         for (int i = 0; i < lines.length - 1; i++) {

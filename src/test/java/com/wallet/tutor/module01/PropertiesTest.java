@@ -1,16 +1,19 @@
 package com.wallet.tutor.module01;
 
-import static com.wallet.tutor.Logger.log;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import org.junit.jupiter.api.Test;
 
-public class PropertiesTutor {
-    private static final String FILE_PROPS = "files/props.properties";
-    private static final String SYSTEM_PROPS = "files/system.properties";
+@Slf4j
+public class PropertiesTest {
+    private static final String FILE_PROPS = "src/main/resources/props.properties";
+    private static final String SYSTEM_PROPS = "src/main/resources/system.properties";
     private final Properties properties = new Properties();
 
     /**
@@ -24,15 +27,13 @@ public class PropertiesTutor {
     @Test
     public void testJavaVersion() {
         String version = getJavaVersion();
-        log(getJavaVersion());
+        log.info(getJavaVersion());
         assertTrue(version.startsWith("11."));
     }
 
     /**
      * Loads the properties file from the files / props.properties folder
      * And returns the downloaded properties
-     *
-     * @return
      */
     public Properties getProperties() {
         return getProperties(FILE_PROPS);
@@ -52,10 +53,9 @@ public class PropertiesTutor {
     @Test
     public void testGetProperties() {
         Properties props = getProperties();
-        log("country=" + props.getProperty("country"));
-        log("color=" + props.getProperty("color"));
+        log.info("country=" + props.getProperty("country"));
+        log.info("color=" + props.getProperty("color"));
         assertEquals("Australia", props.getProperty("country"));
         assertEquals("red", props.getProperty("color"));
     }
-
 }

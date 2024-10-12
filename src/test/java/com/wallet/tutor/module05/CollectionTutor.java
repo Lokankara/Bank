@@ -1,6 +1,5 @@
 package com.wallet.tutor.module05;
 
-import static com.wallet.tutor.Logger.log;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.wallet.tutor.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -22,6 +21,7 @@ import org.junit.jupiter.api.Test;
  * Implement method joinByIterator()
  */
 
+@Slf4j
 public class CollectionTutor {
     String[] animals =
             {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human", "Cow"};
@@ -30,7 +30,7 @@ public class CollectionTutor {
      * This method should return the ArrayList with all the animals
      */
     public List<String> getAnimalsList() {
-        log(String.join(",", Arrays.asList(animals)));
+        log.info(String.join(",", Arrays.asList(animals)));
         return Arrays.asList(animals);
     }
 
@@ -61,12 +61,10 @@ public class CollectionTutor {
 
     @Test
     public void testCollections() {
-        log("getAnimalsList: " + joinByCycle(Arrays.asList(animals)));
-
-        log("getAnimalsList: " + joinByCycle(getAnimalsList()));
-        log("getAnimalsSet: " + joinByCycle(getAnimalsSet()));
-
-        log("getAnimalsList by iterator: " + joinByIterator(getAnimalsList()));
+        log.info("getAnimalsList: " + joinByCycle(Arrays.asList(animals)));
+        log.info("getAnimalsList: " + joinByCycle(getAnimalsList()));
+        log.info("getAnimalsSet: " + joinByCycle(getAnimalsSet()));
+        log.info("getAnimalsList by iterator: " + joinByIterator(getAnimalsList()));
     }
 
     @Test

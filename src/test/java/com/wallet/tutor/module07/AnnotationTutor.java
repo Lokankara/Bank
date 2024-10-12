@@ -1,16 +1,17 @@
 package com.wallet.tutor.module07;
 
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
 
-import static com.wallet.tutor.Logger.log;
 import java.lang.annotation.Annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Test;
-
+@Slf4j
 public class AnnotationTutor {
     static final String introspectClass = "com.wallet.market.tutor.module07.ExampleClass";
 
@@ -25,7 +26,7 @@ public class AnnotationTutor {
         boolean myAnnotation = method.isAnnotationPresent(MyAnnotation.class);
 
         if (myAnnotation) {
-            log(String.format("my annotation name = %s", annotation));
+            log.info(String.format("my annotation name = %s", annotation));
         }
 
         Field[] fields = cls.getDeclaredFields();
@@ -35,7 +36,7 @@ public class AnnotationTutor {
             if (annotations.length > 0) {
                 for (Annotation annotation1 : annotations) {
                     if (annotation1 instanceof Default) {
-                        log(String.format("Field: %s, annotation name = %s, annotation value = %s%n",
+                        log.info(String.format("Field: %s, annotation name = %s, annotation value = %s%n",
                                 field.getName(),
                                 ((Default) annotation1).name(),
                                 ((Default) annotation1).value()));

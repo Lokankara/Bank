@@ -1,6 +1,5 @@
 package com.wallet.tutor.module02;
 
-import static com.wallet.tutor.Logger.log;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -13,11 +12,14 @@ import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-public class SerializableTutor {
+@Slf4j
+public class SerializableTest {
 
-    private static final String FILE_OBJECT_DATA = "files/object.data";
+    private static final String FILE_OBJECT_DATA = "src/main/resources/object.data";
     private static final Calendar dayOfBirth;
 
     static {
@@ -71,7 +73,6 @@ public class SerializableTutor {
      * Should write the data of Person to file FILE_OBJECT_DATA,
      * using ObjectOutputStream
      *
-     * @param person
      */
     public void writeToFile(Person person) {
         try (FileOutputStream file = new FileOutputStream(FILE_OBJECT_DATA);
@@ -92,12 +93,9 @@ public class SerializableTutor {
     public Person readFromFile() {
         try {
             FileInputStream file = new FileInputStream(FILE_OBJECT_DATA);
-
             ObjectInputStream inputStream = new ObjectInputStream(file);
-
             Person person = (Person) inputStream.readObject();
-
-            log(person);
+            log.info(person.toString());
 
             return person;
 
@@ -110,10 +108,10 @@ public class SerializableTutor {
     public void testSerializeObject() {
         Person person = new Person("John Johnes", dayOfBirth.getTime());
         writeToFile(person);
-        log("Age: " + person.age);
+        log.info("Age: " + person.age);
         Person personFromFile = readFromFile();
-        log("Name from file: " + personFromFile.name);
-        log("Age from file: " + personFromFile.age);
+        log.info("Name from file: " + personFromFile.name);
+        log.info("Age from file: " + personFromFile.age);
         assertEquals(personFromFile.name, personFromFile.name);
         assertNotEquals(person.age, personFromFile.age);
     }
@@ -125,19 +123,17 @@ public class SerializableTutor {
         person.addAddress(address);
 
         writeToFile(person);
-
-        log("Age: " + person.age);
+        log.info("Age: " + person.age);
         Person personFromFile = readFromFile();
-        log("Name from file: " + personFromFile.name);
-        log("Age from file: " + personFromFile.age);
+        log.info("Name from file: " + personFromFile.name);
+        log.info("Age from file: " + personFromFile.age);
         assertEquals(personFromFile.name, personFromFile.name);
         assertNotEquals(person.age, personFromFile.age);
 
         Address addressFromFile = personFromFile.addressList.get(0);
-        log("City from file: " + addressFromFile.city);
-        log("Appartment from file: " + addressFromFile.appartement);
+        log.info("City from file: " + addressFromFile.city);
+        log.info("Appartment from file: " + addressFromFile.appartement);
         assertEquals(addressFromFile.city, address.city);
         assertEquals(addressFromFile.appartement, address.appartement);
     }
-
 }

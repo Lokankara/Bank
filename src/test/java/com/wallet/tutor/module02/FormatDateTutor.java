@@ -7,12 +7,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Formatter;
 
-import static com.wallet.tutor.Logger.log;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.wallet.tutor.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
+@Slf4j
 public class FormatDateTutor {
     private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
     private final Formatter formatter = new Formatter();
@@ -25,7 +25,7 @@ public class FormatDateTutor {
 
         String string = formatter.format(String.format("%td.%tm.%ty", date, date, date)).toString();
 
-        log(string);
+        log.info(string);
 
         return string;
     }
@@ -38,7 +38,7 @@ public class FormatDateTutor {
 
         String string = formatter.format(String.format("%s", date)).toString();
 
-        log(string);
+        log.info(string);
 
         return string;
     }
@@ -49,7 +49,7 @@ public class FormatDateTutor {
      */
     public String getDateBySimpleDateFormat(Date date) {
 
-        log(String.format("dateBySimpleDateFormat: %s", dateFormat.format(date)));
+        log.info(String.format("dateBySimpleDateFormat: %s", dateFormat.format(date)));
 
         return (dateFormat.format(date));
 
@@ -74,14 +74,14 @@ public class FormatDateTutor {
         Date date = cal.getTime();
 
         String dateByFormatter = getDateByFormatter(date);
-        log("dateByFormatter: " + dateByFormatter);
+        log.info("dateByFormatter: " + dateByFormatter);
         assertEquals(dateByFormatter, "01.05.13");
 
         String dateBySimpleDateFormat = getDateBySimpleDateFormat(date);
-        log("dateBySimpleDateFormat: " + dateBySimpleDateFormat);
+        log.info("dateBySimpleDateFormat: " + dateBySimpleDateFormat);
         assertEquals(dateBySimpleDateFormat, "01.05.13");
 
-        log(getDateString(new Date()));
+        log.info(getDateString(new Date()));
     }
 
     @Test

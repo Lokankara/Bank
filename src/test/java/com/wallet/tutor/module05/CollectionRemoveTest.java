@@ -1,34 +1,33 @@
 package com.wallet.tutor.module05;
 
-import static com.wallet.tutor.Logger.log;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import com.wallet.tutor.Logger;
-import org.junit.jupiter.api.Test;
 
 /**
  * 1) Remove all entrances of word "Cow" and print the result
  * 2) Remove all entrances having 3 letters and print the result
- * 3) Implement method removeIf which will take interface ShouldRemove as a parameter:
- * <T> List<T> removeIf(List<T> list, ShouldRemove<T> shouldRemove)
+ * 3) Implement method removeIf which will take interface ShouldRemove as a parameter
  * This method have to iterate over the list and
  * remove those elements for which ShouldRemove.check() returns true
  */
 
-
-public class CollectionRemoveTutor {
+@Slf4j
+public class CollectionRemoveTest {
     String[] animals = {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
 
     public String joinByCycle(Collection<?> c) {
         StringBuilder builder = new StringBuilder();
         for (Object item : c) {
             builder.append(item);
-            if (builder.length() > 0) {
+            if (!builder.isEmpty()) {
                 builder.append(", ");
             }
         }
@@ -57,11 +56,11 @@ public class CollectionRemoveTutor {
 
         list = getAnimals();
         unCow(list);
-        log("list after remove: " + joinByCycle(list));
+        log.info("list after remove: " + joinByCycle(list));
 
         list = getAnimals();
         un3Letterization(list);
-        log("list after remove 3 letters animals: " + joinByCycle(list));
+        log.info("list after remove 3 letters animals: " + joinByCycle(list));
     }
 
     @Test
@@ -101,9 +100,7 @@ public class CollectionRemoveTutor {
     @Test
     public void un3Letterization_emptyList_doNothing() {
         List<String> list = new ArrayList<String>();
-
         un3Letterization(list);
-
         assertTrue(list.isEmpty());
     }
 

@@ -14,12 +14,8 @@ import java.util.List;
 @Slf4j
 public class SynchronizedTest {
 
-    static StringBuffer buf = new StringBuffer();
-    Integer counter = 0;
-
-    static void log(String s) {
-        buf.append(s).append("\n");
-    }
+    private final Object monitor = new Object();
+    private Integer counter = 0;
 
     class TestThread implements Runnable {
         String threadName;
@@ -31,11 +27,10 @@ public class SynchronizedTest {
         @Override
         public void run() {
             for (int i = 0; i < 1000; i++) {
-                synchronized (counter) {
+                synchronized (monitor) {
                     counter++;
                     Thread.yield();
                 }
-                log(threadName + ":" + i + ":" + counter);
             }
         }
     }
@@ -56,9 +51,8 @@ public class SynchronizedTest {
                 threads.get(i).join();
             }
         } catch (InterruptedException e) {
-            log.info(e.getMessage());
+            log.error(e.getMessage());
         }
-		log.info(String.valueOf(buf));
         log.info("counter = " + counter);
     }
 }

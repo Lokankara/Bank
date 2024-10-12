@@ -1,10 +1,10 @@
 package com.wallet.bank.domain;
 
-import com.wallet.bank.utils.Logger;
 import com.wallet.bank.exceptions.ClientExistsException;
 import com.wallet.bank.service.EmailService;
 import com.wallet.bank.utils.ClientRegistrationListener;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Getter
 public class Bank implements Serializable {
     private final List<Client> clients = new ArrayList<Client>();
@@ -57,7 +58,7 @@ public class Bank implements Serializable {
         @Override
         public void onClientAdded(Client client) {
             printedClients++;
-            Logger.log(String.format("Client added: %s%n", client.getName()));
+            log.info(String.format("Client added: %s%n", client.getName()));
         }
 
     }
@@ -66,7 +67,7 @@ public class Bank implements Serializable {
         @Override
         public void onClientAdded(Client client) {
             emailedClients++;
-            Logger.log(String.format("Notification email for client %s to be sent", client.getName()));
+            log.info(String.format("Notification email for client %s to be sent", client.getName()));
         }
     }
 
@@ -74,7 +75,7 @@ public class Bank implements Serializable {
         @Override
         public void onClientAdded(Client client) {
             debuggedClients++;
-            Logger.log(String.format("Client %s added on: %s", client.getName(), DateFormat.getDateInstance(DateFormat.FULL).format(new Date())));
+            log.info(String.format("Client %s added on: %s", client.getName(), DateFormat.getDateInstance(DateFormat.FULL).format(new Date())));
         }
     }
 
@@ -82,7 +83,9 @@ public class Bank implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Bank bank)) return false;
-        return printedClients == bank.printedClients && emailedClients == bank.emailedClients && debuggedClients == bank.debuggedClients && Objects.equals(clients, bank.clients) && Objects.equals(listeners, bank.listeners) && Objects.equals(emailService, bank.emailService);
+        return printedClients == bank.printedClients && emailedClients == bank.emailedClients
+                && debuggedClients == bank.debuggedClients && Objects.equals(clients, bank.clients)
+                && Objects.equals(listeners, bank.listeners) && Objects.equals(emailService, bank.emailService);
     }
 
     @Override

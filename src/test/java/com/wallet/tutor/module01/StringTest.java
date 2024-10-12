@@ -1,14 +1,14 @@
 package com.wallet.tutor.module01;
 
-import static com.wallet.tutor.Logger.log;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.wallet.tutor.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-public class StringTutor {
+@Slf4j
+public class StringTest {
 
     /**
      * Replace all null in assertEquals to true or false
@@ -18,19 +18,19 @@ public class StringTutor {
         String s1 = "aaa";
         String s2 = "aaa";
         String s3 = new String("aaa");
-        Logger.log("Address of the object s1: " + System.identityHashCode(s1));
-        Logger.log("Address of the object s2: " + System.identityHashCode(s2));
+        log.info("Address of the object s1: " + System.identityHashCode(s1));
+        log.info("Address of the object s2: " + System.identityHashCode(s2));
         assertEquals(s1 == s2, true);
         assertEquals(s1.equals(s2), true);
-        Logger.log("Address of the object s3: " + System.identityHashCode(s3));
+        log.info("Address of the object s3: " + System.identityHashCode(s3));
         assertEquals(s1 == s3, false);
         // The intern () method allows you to get a string from a row pool
         String s4 = s3.intern();
-        Logger.log("Address of the object s4: " + System.identityHashCode(s4));
+        log.info("Address of the object s4: " + System.identityHashCode(s4));
         assertEquals(s1 == s4, true);
         // We test the re-creation of the object every time the
         s3 = s3 + "bbb";
-        Logger.log("Address of the object s3: " + System.identityHashCode(s3));
+        log.info("Address of the object s3: " + System.identityHashCode(s3));
         s3 = s3.substring(0, 3); // s3 again "aaa"
         assertEquals(s3 == s1, false);
         assertEquals(s3.equals(s1), true);
@@ -79,7 +79,6 @@ public class StringTutor {
         assertTrue(checkGreeting("Hello, Peter Pan!"));
         assertTrue(checkGreeting("Hello, Peter Pan!"));
         assertTrue(checkGreeting("Hello, Peter Pan !"));
-
         assertFalse(checkGreeting("Hello, Peter Pan"));
         assertFalse(checkGreeting("Hello, Li Song!"));
         assertFalse(checkGreeting("Hello, Kui Le!"));
