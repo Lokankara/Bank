@@ -1,14 +1,14 @@
 package com.wallet.tutor.module04;
 
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Here the problem from SynchronizedListTutor is solved by using of Collections.synchronizedList.
@@ -20,21 +20,14 @@ import org.junit.jupiter.api.Test;
  * - Use CopyOnWriteArrayList - it helps
  * - Pass Collections.unmodifiableList() to method print() - does not help
  * - Pass copy of ArrayList to print() method - it helps
- *
- *  Solve this problem by passing a copy of list to print() - you should use constructor of ArrayList.
- *  Then print() will be working with its own copy of list, which will not be changing.
+ * Solve this problem by passing a copy of list to print() - you should use constructor of ArrayList.
+ * Then print() will be working with its own copy of list, which will not be changing.
  */
-
-@Slf4j
 public class SynchronizedTest {
 
     Object monitor = new Object();
     static boolean failed = false;
     static StringBuffer buf = new StringBuffer();
-
-    static void log(String s) {
-        buf.append(s + "\n");
-    }
 
     static void err(String s) {
         buf.append("<span style='color:red'><b>" + s + "</b></span>\n");
@@ -64,7 +57,7 @@ public class SynchronizedTest {
                         randomAnimals.add(getRandomAnimal());
                         print(randomAnimals);
                     }
-                    print(new ArrayList<String>(randomAnimals));
+                    print(new ArrayList<>(randomAnimals));
                 }
             } catch (Exception e) {
                 err(e.getClass().getName());
@@ -79,7 +72,6 @@ public class SynchronizedTest {
             builder.append(iterator.next())
                     .append(" ");
         }
-        log(builder.toString());
     }
 
     @Test
@@ -88,11 +80,9 @@ public class SynchronizedTest {
         for (int i = 0; i < 100; i++) {
             threads.add(new Thread(new TestThread("t" + i)));
         }
-        log.info("Starting threads");
         for (int i = 0; i < 100; i++) {
             threads.get(i).start();
         }
-        log.info("Waiting for threads");
         try {
             for (int i = 0; i < 100; i++) {
                 threads.get(i).join();
@@ -101,7 +91,6 @@ public class SynchronizedTest {
             e.printStackTrace();
         }
 
-        log.info(String.valueOf(buf));
         assertFalse(failed);
 
     }

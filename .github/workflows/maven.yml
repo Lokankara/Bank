@@ -79,6 +79,9 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-maven-
 
+      - name: Set API key from secret
+        run: echo "spring.ai.openai.api-key=${{ secrets.SPRING_AI_OPENAI_API_KEY }}" >> $GITHUB_ENV
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
