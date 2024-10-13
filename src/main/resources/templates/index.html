@@ -1,15 +1,164 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>LLAMA Text and Image Generator</title>
+    <title>Text and Image</title>
+    <style>
+        :root {
+            --card-height: 290px;
+            --card-width: calc(var(--card-height) / 1.5);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #191c29;
+        }
+
+        .container {
+            margin-top: 150px;
+            position: relative;
+            top: 10%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 150px;
+            height: 90vw;
+        }
+
+        .card {
+            width: var(--card-width);
+            height: var(--card-height);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 0 36px;
+            perspective: 2500px;
+        }
+
+        .cover-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .wrapper {
+            transition: all 0.5s;
+            position: absolute;
+            width: 100%;
+            z-index: -1;
+        }
+
+        .card:hover .wrapper {
+            transform: perspective(900px) translateY(-5%) rotateX(25deg) translateZ(0);
+            box-shadow: 2px 35px 32px -8px rgba(0, 0, 0, 0.75);
+        }
+
+        .wrapper::before,
+        .wrapper::after {
+            content: "";
+            opacity: 0;
+            width: 100%;
+            height: 80px;
+            transition: all 0.5s;
+            position: absolute;
+            left: 0;
+        }
+
+        .wrapper::before {
+            top: 0;
+            height: 100%;
+            background-image: linear-gradient(
+                    to top,
+                    transparent 46%,
+                    rgba(12, 13, 19, 0.5) 68%,
+                    rgba(12, 13, 19) 97%
+            );
+        }
+
+        .wrapper::after {
+            bottom: 0;
+            opacity: 1;
+            background-image: linear-gradient(
+                    to bottom,
+                    transparent 46%,
+                    rgba(12, 13, 19, 0.5) 68%,
+                    rgba(12, 13, 19) 97%
+            );
+        }
+
+        .card:hover .wrapper::before,
+        .card:hover .wrapper::after {
+            opacity: 1;
+        }
+
+        .card:hover .wrapper::after {
+            height: 120px;
+        }
+
+        .title {
+            width: 100%;
+            transition: transform 0.5s;
+        }
+
+        .card:hover .title {
+            transform: translate3d(0%, -50px, 100px);
+        }
+
+        .character {
+            height: 100%;
+            bottom: 10%;
+            opacity: 0;
+            transition: all 0.5s;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .card:hover .character {
+            opacity: 1;
+            transform: translate3d(0%, -30%, 100px);
+            cursor: pointer;
+        }
+
+        .card-details .character {
+            opacity: 1;
+        }
+
+        .card-details h2 {
+            padding: 10px;
+            opacity: 0;
+            font-family: Raleway sans-serif;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
-<h1>LLAMA Text and Image Generator</h1>
-<form action="#" th:action="@{/}" method="post">
-    <label for="prompt">Enter Prompt:</label>
-    <input type="text" id="prompt" name="prompt" required>
-    <button type="submit">Generate</button>
-</form>
-<p th:text="${errorMessage}" style="color:red;"></p>
+<div class="container">
+    <div class="grid" th:each="customer : ${customers}">
+        <a th:href="@{/customer/{id}(id=${customer.customerId})}"
+           alt="new page"
+           target="_blank"
+           class="card">
+        <div class="wrapper">
+                <img src="https://media.idownloadblog.com/wp-content/uploads/2015/05/Avengers-2-Age-of-Ultron-Logo-iPhone-6-Wallpaper.jpg"
+                     alt="logo" class="cover-image"/>
+            </div>
+            <img src="https://www.pngmart.com/files/13/Avengers-Logo-Transparent-PNG.png" class="title"
+                 alt="background"/>
+            <img th:src="${customer.imageUrl}" alt="Character" class="character"/>
+            <div class="card-details">
+                <h2 th:text="${customer.name}"></h2>
+            </div>
+        </a>
+    </div>
+</div>
 </body>
 </html>

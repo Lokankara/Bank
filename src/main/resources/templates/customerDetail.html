@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${customer.name} + ' - Details'"></title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #191c29;
+            color: white;
+            font-family: Raleway, sans-serif;
+        }
+
+        .container {
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .character-detail {
+            max-height: 75vh;
+            transition: all 0.5s;
+        }
+
+        .character-detail:hover {
+            max-height: 80vh;
+            transform: translate3d(0%, -5%, 10px);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #49b93d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 th:text="${customer.name}" class="back-button"></h1>
+    <a th:href="/">
+        <img th:src="${customer.imageUrl}" alt="Character" class="character-detail"/>
+    </a>
+</div>
+</body>
+</html>

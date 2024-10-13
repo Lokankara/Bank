@@ -13,10 +13,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomerDto {
-
     private Long customerId;
-    private String customerName;
+    private String name;
     private String email;
+    private String imageUrl;
     private Timestamp createdAt;
     private Set<AccountDto> accounts;
 }

@@ -11,10 +11,11 @@ public class CustomerMapper {
 
     public CustomerDto toDto(Customer customer) {
         return CustomerDto.builder()
-                .customerId(customer.getCustomerId())
-                .customerName(customer.getCustomerName())
+                .name(customer.getName())
                 .email(customer.getEmail())
+                .imageUrl(customer.getImageUrl())
                 .createdAt(customer.getCreatedAt())
+                .customerId(customer.getCustomerId())
                 .accounts(customer.getAccounts()
                         .stream()
                         .map(AccountMapper::toDto)

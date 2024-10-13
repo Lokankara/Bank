@@ -1,7 +1,6 @@
 package com.wallet.bank.domain;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -20,6 +20,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,16 +30,13 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
-    @Column(name = "customer_name", nullable = false)
-    private String customerName;
-
-    @Column(name = "email", nullable = false, unique = true)
+    private String name;
     private String email;
-
-    @Column(name = "created_at")
+    private String imageUrl;
     private Timestamp createdAt;
 
     @ToString.Exclude
+    @Builder.Default
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<Account> accounts = new HashSet<>();
 }

@@ -28,4 +28,10 @@ public class CustomerService {
     public CustomerDto createCustomer(Customer customer) {
         return mapper.toDto(customerRepository.save(customer));
     }
+
+    public CustomerDto getCustomerById(Long id) {
+        return mapper.toDto(
+                customerRepository.findById(id)
+                        .orElse(Customer.builder().name("NOT FOUND").build()));
+    }
 }
