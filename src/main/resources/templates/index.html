@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>LLAMA Text and Image Generator</title>
+</head>
+<body>
+<h1>LLAMA Text and Image Generator</h1>
+<form action="#" th:action="@{/}" method="post">
+    <label for="prompt">Enter Prompt:</label>
+    <input type="text" id="prompt" name="prompt" required>
+    <button type="submit">Generate</button>
+</form>
+<p th:text="${errorMessage}" style="color:red;"></p>
+</body>
+</html>

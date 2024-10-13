@@ -1,8 +1,8 @@
 package com.wallet.bank.domain;
 
 import com.wallet.bank.utils.Params;
-import com.wallet.bank.account.AbstractAccount;
-import com.wallet.bank.account.Account;
+import com.wallet.bank.account.AbstractIAccount;
+import com.wallet.bank.account.IAccount;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -29,7 +29,7 @@ public class Client implements Serializable {
     private String phoneAreaCode;
     private String phoneNumber;
     @Setter
-    private Set<Account> accounts = new HashSet<>();
+    private Set<IAccount> IAccounts = new HashSet<>();
     private String city;
     private final LocalDate birthday;
 
@@ -37,10 +37,10 @@ public class Client implements Serializable {
         this(name, gender, new ArrayList<>());
     }
 
-    public Client(String name, Gender gender, Collection<Account> accounts) {
+    public Client(String name, Gender gender, Collection<IAccount> IAccounts) {
         this.name = name;
         this.gender = gender;
-        this.accounts.addAll(accounts);
+        this.IAccounts.addAll(IAccounts);
         this.birthday = LocalDate.now();
     }
 
@@ -51,12 +51,12 @@ public class Client implements Serializable {
         this.birthday = LocalDate.now();
     }
 
-    public Client(String name, Gender gender, Account[] accounts) {
-        this(name, gender, Arrays.asList(accounts));
+    public Client(String name, Gender gender, IAccount[] IAccounts) {
+        this(name, gender, Arrays.asList(IAccounts));
     }
 
-    public Client(final String name, final Gender gender, Account account) {
-        this(name, gender, new Account[]{account});
+    public Client(final String name, final Gender gender, IAccount IAccount) {
+        this(name, gender, new IAccount[]{IAccount});
     }
 
     public Client(String client, Gender gender, LocalDate date) {
@@ -104,15 +104,15 @@ public class Client implements Serializable {
         Client client = new Client(
                 params.get("name"),
                 Gender.parse(params.get("gender")),
-                AbstractAccount.parse(params));
+                AbstractIAccount.parse(params));
 
         client.setCity(params.get("city"));
 
         return client;
     }
 
-    public Set<Account> getAccounts() {
-        return Collections.unmodifiableSet(accounts);
+    public Set<IAccount> getIAccounts() {
+        return Collections.unmodifiableSet(IAccounts);
     }
 
     @Override
@@ -125,14 +125,14 @@ public class Client implements Serializable {
                 .append("\n").append("phoneNumber: ").append(getPhoneNumber())
                 .append("\n");
 
-        for (Account account : getAccounts()) {
-            builder.append(account).append("\n");
+        for (IAccount IAccount : getIAccounts()) {
+            builder.append(IAccount).append("\n");
         }
         return builder.toString();
     }
 
-    public void addAccount(final Account account) {
-        accounts.add(account);
+    public void addAccount(final IAccount IAccount) {
+        IAccounts.add(IAccount);
     }
 
     public long daysUntilBirthday() {

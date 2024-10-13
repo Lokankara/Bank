@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccountFactoryProviderTest {
+public class IAccountFactoryProviderTest {
     private AccountDetails current;
-    public static Account accountChecking;
-    public static Account accountSaving;
+    public static IAccount IAccountChecking;
+    public static IAccount IAccountSaving;
 
     @BeforeEach
     public void setUp() {
@@ -21,50 +21,50 @@ public class AccountFactoryProviderTest {
         AccountDetails saving = AccountDetails.builder().id(0).amount(0.0).type(save).build();
         AccountDetails checking = AccountDetails.builder().id(0).amount(0.0).overdraft(0.0).type(check).build();
         current = AccountDetails.builder().id(0).amount(0.0).overdraft(0.0).type("current").build();
-        accountSaving = AccountFactoryProvider.createAccount(saving);
-        accountChecking = AccountFactoryProvider.createAccount(checking);
+        IAccountSaving = AccountFactoryProvider.createAccount(saving);
+        IAccountChecking = AccountFactoryProvider.createAccount(checking);
     }
 
     @Test
     public void testAccountSave() {
-        assertInstanceOf(Account.class, accountSaving);
+        assertInstanceOf(IAccount.class, IAccountSaving);
     }
 
     @Test
     public void testValidCheckingAccount() {
-        assertInstanceOf(CheckingAccount.class, accountChecking);
+        assertInstanceOf(CheckingIAccount.class, IAccountChecking);
     }
 
     @Test
     public void testInvalidAccountType() {
-        Account account = AccountFactoryProvider.createAccount(current);
-        assertNull(account);
+        IAccount IAccount = AccountFactoryProvider.createAccount(current);
+        assertNull(IAccount);
     }
 
     @Test
     public void testValidCheckingAccountAndClone() {
-        AbstractAccount checking = AccountCache.cloneAccount("CHECKING");
-        assertEquals(accountChecking, checking);
+        AbstractIAccount checking = AccountCache.cloneAccount("CHECKING");
+        assertEquals(IAccountChecking, checking);
     }
 
     @Test
     public void testValidSavingAccountAndClone() {
-        AbstractAccount saving = AccountCache.cloneAccount("SAVING");
-        assertEquals(accountSaving, saving);
+        AbstractIAccount saving = AccountCache.cloneAccount("SAVING");
+        assertEquals(IAccountSaving, saving);
     }
 
     @Test
     public void testSavingAccountAndShallowClone() {
-        SavingAccount save = new SavingAccount(1, 1.0);
-        AbstractAccount clone = save.clone();
+        SavingIAccount save = new SavingIAccount(1, 1.0);
+        AbstractIAccount clone = save.clone();
         assertEquals(clone, save);
     }
 
     @Test
     public void testSavingAccountAndDeepClone() {
-        SavingAccount savingAccount = new SavingAccount(1, 1.0);
-        AbstractAccount clone = savingAccount.clone();
-        Class<? extends SavingAccount> clazz = savingAccount.getClass();
+        SavingIAccount savingAccount = new SavingIAccount(1, 1.0);
+        AbstractIAccount clone = savingAccount.clone();
+        Class<? extends SavingIAccount> clazz = savingAccount.getClass();
         int id = savingAccount.getId();
         int type = savingAccount.getType();
         double balance = savingAccount.getBalance();
@@ -77,9 +77,9 @@ public class AccountFactoryProviderTest {
 
     @Test
     public void testCheckingAccountAndDeepClone() {
-        CheckingAccount checkingAccount = new CheckingAccount(1, 1.0, 0.1);
-        AbstractAccount clone = checkingAccount.clone();
-        Class<? extends CheckingAccount> clazz = checkingAccount.getClass();
+        CheckingIAccount checkingAccount = new CheckingIAccount(1, 1.0, 0.1);
+        AbstractIAccount clone = checkingAccount.clone();
+        Class<? extends CheckingIAccount> clazz = checkingAccount.getClass();
         int id = checkingAccount.getId();
         int type = checkingAccount.getType();
         double balance = checkingAccount.getBalance();

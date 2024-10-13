@@ -2,7 +2,7 @@ package com.wallet.bank.account;
 
 import com.wallet.bank.exceptions.NotEnoughFundsException;
 
-public interface Account {
+public interface IAccount {
 
     void deposit(double amount);
 

@@ -1,8 +1,8 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.Account;
-import com.wallet.bank.account.CheckingAccount;
-import com.wallet.bank.account.SavingAccount;
+import com.wallet.bank.account.IAccount;
+import com.wallet.bank.account.CheckingIAccount;
+import com.wallet.bank.account.SavingIAccount;
 import com.wallet.bank.bank.Bank;
 import com.wallet.bank.bank.service.BankService;
 import com.wallet.bank.domain.Client;
@@ -19,16 +19,16 @@ public class ClientExistsTest {
     public void testBank() throws ClientExistsException {
         Bank bank = new Bank();
         Client client1 = new Client("Smith John", Gender.MALE);
-        Set<Account> accounts1 = new HashSet<Account>();
-        accounts1.add(new SavingAccount(1, 1000.0));
-        accounts1.add(new CheckingAccount(2, 1000.0, 100.0));
-        client1.setAccounts(accounts1);
+        Set<IAccount> accounts1 = new HashSet<IAccount>();
+        accounts1.add(new SavingIAccount(1, 1000.0));
+        accounts1.add(new CheckingIAccount(2, 1000.0, 100.0));
+        client1.setIAccounts(accounts1);
 
         Client client2 = new Client("Smith Michelle", Gender.FEMALE);
-        Set<Account> accounts2 = new HashSet<Account>();
-        accounts2.add(new SavingAccount(3, 2000.0));
-        accounts2.add(new CheckingAccount(4, 1500.0, 200.0));
-        client2.setAccounts(accounts2);
+        Set<IAccount> accounts2 = new HashSet<IAccount>();
+        accounts2.add(new SavingIAccount(3, 2000.0));
+        accounts2.add(new CheckingIAccount(4, 1500.0, 200.0));
+        client2.setIAccounts(accounts2);
 
         BankService.addClient(bank, client1);
         BankService.addClient(bank, client2);

@@ -1,11 +1,11 @@
 package com.wallet.bank.domain;
 
 import com.wallet.bank.annotations.ActiveRecordEntity;
-import com.wallet.bank.account.AbstractAccount;
+import com.wallet.bank.account.AbstractIAccount;
 
 @ActiveRecordEntity(tableName = "SAVING_ACCOUNT", columnKeyName = "id")
-public class SavingAccount extends AbstractAccount {
-    public SavingAccount(int id, double balance) {
+public class SavingIAccount extends AbstractIAccount {
+    public SavingIAccount(int id, double balance) {
         super(id, balance);
     }
 

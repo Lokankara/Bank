@@ -1,7 +1,7 @@
 package com.wallet.bank.bank.service;
 
-import com.wallet.bank.account.Account;
-import com.wallet.bank.account.CheckingAccount;
+import com.wallet.bank.account.IAccount;
+import com.wallet.bank.account.CheckingIAccount;
 import com.wallet.bank.bank.Bank;
 import com.wallet.bank.domain.Client;
 
@@ -26,10 +26,10 @@ public class BankReport {
 
     /* Returns the total number of accounts for all bank clients */
     public int getNumberOfAccounts() {
-        Set<Account> accounts = new HashSet<>();
+        Set<IAccount> IAccounts = new HashSet<>();
         for (Client client : bank.getClients())
-            accounts.addAll(client.getAccounts());
-        return accounts.size();
+            IAccounts.addAll(client.getIAccounts());
+        return IAccounts.size();
     }
 
     /* Returns the set of clients in alphabetical order */
@@ -47,11 +47,11 @@ public class BankReport {
     /* Returns the total sum (balance) from the accounts of all bank clients */
     public double getTotalSumInAccounts() {
         double sum = 0.0;
-        Set<Account> accounts = new HashSet<>();
+        Set<IAccount> IAccounts = new HashSet<>();
         for (Client client : bank.getClients())
-            accounts.addAll(client.getAccounts());
-        for (Account account : accounts) {
-            sum += account.getBalance();
+            IAccounts.addAll(client.getIAccounts());
+        for (IAccount IAccount : IAccounts) {
+            sum += IAccount.getBalance();
         }
         return Math.round(sum * 100) / 100d;
     }
@@ -60,11 +60,11 @@ public class BankReport {
      * Returns the set of all accounts. The list is ordered by current account
      * balance
      */
-    public SortedSet<Account> getAccountsSortedBySum() {
-        SortedSet<Account> result = new TreeSet<>((o1, o2) ->
+    public SortedSet<IAccount> getAccountsSortedBySum() {
+        SortedSet<IAccount> result = new TreeSet<>((o1, o2) ->
                 (int) Math.round(o1.getBalance() - o2.getBalance()));
         for (Client client : bank.getClients()) {
-            result.addAll(client.getAccounts());
+            result.addAll(client.getIAccounts());
         }
         return result;
     }
@@ -75,14 +75,14 @@ public class BankReport {
      */
     public double getBankCreditSum() {
         double result = 0.0;
-        Set<Account> accounts = new HashSet<>();
+        Set<IAccount> IAccounts = new HashSet<>();
         for (Client client : bank.getClients()) {
-            accounts.addAll(client.getAccounts());
+            IAccounts.addAll(client.getIAccounts());
         }
-        for (Account account : accounts)
-            if (account instanceof CheckingAccount) {
-                if ((account).getBalance() < 0) {
-                    result -= account.getBalance();
+        for (IAccount IAccount : IAccounts)
+            if (IAccount instanceof CheckingIAccount) {
+                if ((IAccount).getBalance() < 0) {
+                    result -= IAccount.getBalance();
                 }
             }
 
@@ -90,10 +90,10 @@ public class BankReport {
     }
 
     /* Returns a map of client accounts */
-    public Map<Client,Collection<Account>> getCustomerAccounts() {
-        Map<Client, java.util.Collection<Account>> result = new HashMap<>();
+    public Map<Client,Collection<IAccount>> getCustomerAccounts() {
+        Map<Client, java.util.Collection<IAccount>> result = new HashMap<>();
         for (Client client : bank.getClients()) {
-            result.put(client, client.getAccounts());
+            result.put(client, client.getIAccounts());
         }
         return result;
     }

@@ -7,21 +7,21 @@ import java.util.Locale;
 import com.wallet.bank.domain.Currency;
 import com.wallet.bank.utils.Params;
 
-public class SavingAccount extends AbstractAccount {
+public class SavingIAccount extends AbstractIAccount {
 
 	@Serial
 	private static final long serialVersionUID = 9200460687227050240L;
 	private Currency currency;
 
-	public SavingAccount(int id, double amount) {
+	public SavingIAccount(int id, double amount) {
 		super(id, amount);
-		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
+		this.setType(AbstractIAccount.SAVING_ACCOUNT_TYPE);
 	}
 	
-	public SavingAccount(int id, double amount, Currency currency) {
+	public SavingIAccount(int id, double amount, Currency currency) {
 		super(id, amount);
 		this.currency = currency;
-		this.setType(AbstractAccount.SAVING_ACCOUNT_TYPE);
+		this.setType(AbstractIAccount.SAVING_ACCOUNT_TYPE);
 	}
 	
 	public Currency getCurrency() {
@@ -38,12 +38,12 @@ public class SavingAccount extends AbstractAccount {
 		return stringAccount;
 	}
 	
-	public static Account parse(Params params) {
+	public static IAccount parse(Params params) {
 		String id = params.get("id");
 		String balance = params.get("balance");
 		String currency = params.get("currency");
 		
-        return new SavingAccount(
+        return new SavingIAccount(
         		Integer.parseInt(id), 
         		Double.parseDouble(balance),
         		new Currency(currency));

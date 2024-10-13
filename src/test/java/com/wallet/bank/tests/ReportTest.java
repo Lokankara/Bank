@@ -1,11 +1,11 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.Account;
-import com.wallet.bank.account.CheckingAccount;
+import com.wallet.bank.account.IAccount;
+import com.wallet.bank.account.CheckingIAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
-import com.wallet.bank.domain.SavingAccount;
+import com.wallet.bank.domain.SavingIAccount;
 import com.wallet.bank.exceptions.ClientExistsException;
 import com.wallet.bank.exceptions.NotEnoughFundsException;
 import com.wallet.bank.service.BankReportStreams;
@@ -28,19 +28,19 @@ public class ReportTest {
         Client client2 = new Client("Michael", Gender.MALE, "London");
         Client client3 = new Client("Anna", Gender.FEMALE, "Berlin");
 
-        Account account1 = new SavingAccount(1, 100);
-        Account account2 = new CheckingAccount(2, 100, 20);
-        client1.addAccount(account1);
-        client1.addAccount(account2);
+        IAccount IAccount1 = new SavingIAccount(1, 100);
+        IAccount IAccount2 = new CheckingIAccount(2, 100, 20);
+        client1.addAccount(IAccount1);
+        client1.addAccount(IAccount2);
 
         BankService.addClient(bank, client1);
         BankService.addClient(bank, client2);
         BankService.addClient(bank, client3);
 
-        account1.deposit(100);
+        IAccount1.deposit(100);
 
-        account1.withdraw(10);
-        account2.withdraw(90);
+        IAccount1.withdraw(10);
+        IAccount2.withdraw(90);
 
         BankReportStreams bankReport = new StreamBankReport();
 
@@ -55,15 +55,15 @@ public class ReportTest {
 
         assertEquals(200.0, bankReport.getTotalSumInAccounts(bank), 0.0001);
 
-        HashSet<Account> accountsSortedBySum = new HashSet<>();
-        accountsSortedBySum.add(account2);
-        accountsSortedBySum.add(account1);
+        HashSet<IAccount> accountsSortedBySum = new HashSet<>();
+        accountsSortedBySum.add(IAccount2);
+        accountsSortedBySum.add(IAccount1);
         assertEquals(accountsSortedBySum, bankReport.getAccountsSortedBySum(bank));
 
-        Map<Client, Collection<Account>> map = new HashMap<>();
-        map.put(client1, client1.getAccounts());
-        map.put(client2, client2.getAccounts());
-        map.put(client3, client3.getAccounts());
+        Map<Client, Collection<IAccount>> map = new HashMap<>();
+        map.put(client1, client1.getIAccounts());
+        map.put(client2, client2.getIAccounts());
+        map.put(client3, client3.getIAccounts());
 
         assertEquals(map, bankReport.getCustomerAccounts(bank));
 

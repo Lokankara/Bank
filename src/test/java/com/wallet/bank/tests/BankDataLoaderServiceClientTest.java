@@ -39,7 +39,7 @@ public class BankDataLoaderServiceClientTest {
         assertTrue(bank.getClients().containsAll(clients));
 
         for (Client client : bank.getClients()) {
-            assertEquals(1, client.getAccounts().size());
+            assertEquals(1, client.getIAccounts().size());
         }
     }
 }

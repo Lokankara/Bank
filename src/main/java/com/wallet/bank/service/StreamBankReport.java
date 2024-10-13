@@ -1,6 +1,6 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.account.Account;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import java.util.Collection;
@@ -15,10 +15,10 @@ import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 public class StreamBankReport implements BankReportStreams {
-    private final ToDoubleFunction<? super Account> balance = Account::getBalance;
-    private final Predicate<? super Account> allow = account -> account.getBalance() < 0;
-    private final ToDoubleFunction<? super Account> decrease = account -> -account.getBalance();
-    private final Function<? super Client, ? extends Collection<Account>> accounts = Client::getAccounts;
+    private final ToDoubleFunction<? super IAccount> balance = IAccount::getBalance;
+    private final Predicate<? super IAccount> allow = account -> account.getBalance() < 0;
+    private final ToDoubleFunction<? super IAccount> decrease = account -> -account.getBalance();
+    private final Function<? super Client, ? extends Collection<IAccount>> accounts = Client::getIAccounts;
 
     @Override
     public int getNumberOfClients(Bank bank) {
@@ -29,7 +29,7 @@ public class StreamBankReport implements BankReportStreams {
     public int getNumberOfAccounts(Bank bank) {
         return bank.getClients()
                 .stream()
-                .map(client -> client.getAccounts().size())
+                .map(client -> client.getIAccounts().size())
                 .mapToInt(size -> size)
                 .sum();
     }
@@ -54,20 +54,20 @@ public class StreamBankReport implements BankReportStreams {
     }
 
     @Override
-    public SortedSet<Account> getAccountsSortedBySum(Bank bank) {
+    public SortedSet<IAccount> getAccountsSortedBySum(Bank bank) {
 
-        TreeSet<Account> accountTreeSet = new TreeSet<>(Comparator.comparingDouble(balance));
+        TreeSet<IAccount> IAccountTreeSet = new TreeSet<>(Comparator.comparingDouble(balance));
 
-        bank.getClients().stream().map(accounts).forEach(accountTreeSet::addAll);
+        bank.getClients().stream().map(accounts).forEach(IAccountTreeSet::addAll);
 
-        return accountTreeSet;
+        return IAccountTreeSet;
     }
 
     @Override
     public double getBankCreditSum(Bank bank) {
         return bank.getClients()
                 .stream()
-                .mapToDouble(client -> client.getAccounts()
+                .mapToDouble(client -> client.getIAccounts()
                         .stream()
                         .filter(allow)
                         .mapToDouble(decrease)
@@ -76,7 +76,7 @@ public class StreamBankReport implements BankReportStreams {
     }
 
     @Override
-    public Map<Client, Collection<Account>> getCustomerAccounts(Bank bank) {
+    public Map<Client, Collection<IAccount>> getCustomerAccounts(Bank bank) {
 
         return bank.getClients()
                 .stream()

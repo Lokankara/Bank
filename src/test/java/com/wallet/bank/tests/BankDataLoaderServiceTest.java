@@ -1,6 +1,6 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.Account;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.bank.Bank;
 import com.wallet.bank.bank.service.BankDataLoaderService;
 import com.wallet.bank.bank.service.BankReport;
@@ -41,7 +41,7 @@ public class BankDataLoaderServiceTest {
 
     @Test
     public void testCustomerAccounts() {
-        Map<Client, Collection<Account>> customerAccounts = bankReport.getCustomerAccounts();
+        Map<Client, Collection<IAccount>> customerAccounts = bankReport.getCustomerAccounts();
         assertEquals(10, customerAccounts.size());
     }
 

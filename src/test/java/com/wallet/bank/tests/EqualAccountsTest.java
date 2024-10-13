@@ -1,7 +1,7 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.CheckingAccount;
-import com.wallet.bank.account.SavingAccount;
+import com.wallet.bank.account.CheckingIAccount;
+import com.wallet.bank.account.SavingIAccount;
 import com.wallet.bank.exceptions.NotEnoughFundsException;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 public class EqualAccountsTest {
-    SavingAccount savingAccount1;
-    SavingAccount savingAccount2;
-    CheckingAccount checkingAccount1;
-    CheckingAccount checkingAccount2;
+    SavingIAccount savingAccount1;
+    SavingIAccount savingAccount2;
+    CheckingIAccount checkingAccount1;
+    CheckingIAccount checkingAccount2;
 
     @BeforeEach
     public void initializeAccounts() {
-        savingAccount1 = new SavingAccount(1, 1140.25);
-        savingAccount2 = new SavingAccount(1, 1140.25);
+        savingAccount1 = new SavingIAccount(1, 1140.25);
+        savingAccount2 = new SavingIAccount(1, 1140.25);
 
-        checkingAccount1 = new CheckingAccount(2, 1120.75, 100.0);
-        checkingAccount2 = new CheckingAccount(2, 1120.75, 100.0);
+        checkingAccount1 = new CheckingIAccount(2, 1120.75, 100.0);
+        checkingAccount2 = new CheckingIAccount(2, 1120.75, 100.0);
 
     }
 
@@ -34,11 +34,11 @@ public class EqualAccountsTest {
         assertTrue(checkingAccount1.equals(checkingAccount2));
         assertFalse(checkingAccount1 == checkingAccount2);
 
-        SavingAccount savingAccount3 = new SavingAccount(3, 1140.25);
+        SavingIAccount savingAccount3 = new SavingIAccount(3, 1140.25);
         assertFalse(savingAccount1.equals(savingAccount3));
         assertFalse(savingAccount1 == savingAccount3);
 
-        CheckingAccount checkingAccount4 = new CheckingAccount(4, 1120.75, 100.0);
+        CheckingIAccount checkingAccount4 = new CheckingIAccount(4, 1120.75, 100.0);
         assertFalse(checkingAccount1.equals(checkingAccount4));
         assertFalse(checkingAccount1 == checkingAccount4);
     }

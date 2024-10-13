@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-public abstract class AbstractAccount implements Account, Cloneable, Serializable {
+public abstract class AbstractIAccount implements IAccount, Cloneable, Serializable {
 
     @Serial
     private static final long serialVersionUID = -2272551373694344386L;
@@ -25,7 +25,7 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
     private int type;
     private double balance;
 
-    public AbstractAccount(int id, double amount) {
+    public AbstractIAccount(int id, double amount) {
         this.id = id;
         this.balance = amount;
     }
@@ -58,7 +58,7 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
             return balance;
         }
         if (type == CHECKING_ACCOUNT_TYPE) {
-            CheckingAccount checkingAccount = (CheckingAccount) this;
+            CheckingIAccount checkingAccount = (CheckingIAccount) this;
             return checkingAccount.getBalance() + checkingAccount.getOverdraft();
         }
         return 0;
@@ -85,11 +85,11 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
             return false;
         if (getClass() != obj.getClass())
             return false;
-        AbstractAccount other = (AbstractAccount) obj;
+        AbstractIAccount other = (AbstractIAccount) obj;
         return id == other.id;
     }
 
-    public static Account parse(Params params) {
+    public static IAccount parse(Params params) {
         String accountType = params.get("accountType");
         if (accountType.equals(SAVE)) {
             return parse(params);
@@ -101,9 +101,9 @@ public abstract class AbstractAccount implements Account, Cloneable, Serializabl
     }
 
     @Override
-    protected AbstractAccount clone() {
+    protected AbstractIAccount clone() {
         try {
-            return (AbstractAccount) super.clone();
+            return (AbstractIAccount) super.clone();
         } catch (CloneNotSupportedException exception) {
             log.info("Cloning is not allowed");
             return this;

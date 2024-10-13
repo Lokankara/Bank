@@ -1,8 +1,8 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.Account;
-import com.wallet.bank.account.CheckingAccount;
-import com.wallet.bank.account.SavingAccount;
+import com.wallet.bank.account.IAccount;
+import com.wallet.bank.account.CheckingIAccount;
+import com.wallet.bank.account.SavingIAccount;
 import com.wallet.bank.bank.Bank;
 import com.wallet.bank.bank.service.BankService;
 import com.wallet.bank.domain.Client;
@@ -19,7 +19,7 @@ public class NotEnoughFundsTest {
 
     @Test
     public void testSavingAccount() throws NotEnoughFundsException {
-        SavingAccount savingAccount = new SavingAccount(1, 1000.0);
+        SavingIAccount savingAccount = new SavingIAccount(1, 1000.0);
         savingAccount.deposit(100.0);
         savingAccount.withdraw(50.0);
         assertEquals(1, savingAccount.getId());
@@ -29,7 +29,7 @@ public class NotEnoughFundsTest {
 
     @Test
     public void testCheckingAccount() throws OverdraftLimitExceededException {
-        CheckingAccount checkingAccount = new CheckingAccount(2, 1000.0, 100.0);
+        CheckingIAccount checkingAccount = new CheckingIAccount(2, 1000.0, 100.0);
         checkingAccount.deposit(100.0);
         checkingAccount.withdraw(1150.0);
         assertEquals(2, checkingAccount.getId());
@@ -42,14 +42,14 @@ public class NotEnoughFundsTest {
     public void testClient() {
         Client client = new Client("Smith John", Gender.MALE);
 
-        Set<Account> accounts = new HashSet<Account>();
-        Account savingAccount = new SavingAccount(1, 1000.0);
-        accounts.add(savingAccount);
-        Account checkingAccount = new CheckingAccount(2, 1000.0, 100.0);
-        accounts.add(checkingAccount);
-        client.setAccounts(accounts);
+        Set<IAccount> IAccounts = new HashSet<IAccount>();
+        IAccount savingIAccount = new SavingIAccount(1, 1000.0);
+        IAccounts.add(savingIAccount);
+        IAccount checkingIAccount = new CheckingIAccount(2, 1000.0, 100.0);
+        IAccounts.add(checkingIAccount);
+        client.setIAccounts(IAccounts);
 
-        assertEquals(2, client.getAccounts().size());
+        assertEquals(2, client.getIAccounts().size());
         assertEquals("Mr. Smith John", client.getClientGreeting());
     }
 
@@ -58,22 +58,22 @@ public class NotEnoughFundsTest {
         Bank bank = new Bank();
         Client client1 = new Client("Smith John", Gender.MALE);
 
-        Set<Account> accounts1 = new HashSet<Account>();
-        Account savingAccount1 = new SavingAccount(1, 1000.0);
-        accounts1.add(savingAccount1);
-        Account checkingAccount1 = new CheckingAccount(2, 1000.0, 100.0);
-        accounts1.add(checkingAccount1);
-        client1.setAccounts(accounts1);
+        Set<IAccount> accounts1 = new HashSet<IAccount>();
+        IAccount savingIAccount1 = new SavingIAccount(1, 1000.0);
+        accounts1.add(savingIAccount1);
+        IAccount checkingIAccount1 = new CheckingIAccount(2, 1000.0, 100.0);
+        accounts1.add(checkingIAccount1);
+        client1.setIAccounts(accounts1);
 
         Client client2 = new Client("Smith Michelle", Gender.FEMALE);
 
-        Set<Account> accounts2 = new HashSet<Account>();
-        Account savingAccount2 = new SavingAccount(3, 2000.0);
-        accounts2.add(savingAccount2);
-        Account checkingAccount2 = new CheckingAccount(4, 1500.0, 200.0);
-        accounts2.add(checkingAccount2);
+        Set<IAccount> accounts2 = new HashSet<IAccount>();
+        IAccount savingIAccount2 = new SavingIAccount(3, 2000.0);
+        accounts2.add(savingIAccount2);
+        IAccount checkingIAccount2 = new CheckingIAccount(4, 1500.0, 200.0);
+        accounts2.add(checkingIAccount2);
 
-        client2.setAccounts(accounts2);
+        client2.setIAccounts(accounts2);
 
         BankService.addClient(bank, client1);
         BankService.addClient(bank, client2);

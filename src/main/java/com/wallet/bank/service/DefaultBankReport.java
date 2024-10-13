@@ -1,7 +1,7 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.account.Account;
-import com.wallet.bank.account.CheckingAccount;
+import com.wallet.bank.account.IAccount;
+import com.wallet.bank.account.CheckingIAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import java.util.Collection;
@@ -37,45 +37,45 @@ public class DefaultBankReport implements BankReport {
     public double getTotalSumInAccounts(Bank bank) {
         return bank.getClients()
                 .stream()
-                .mapToDouble(client -> client.getAccounts()
+                .mapToDouble(client -> client.getIAccounts()
                         .stream()
-                        .mapToDouble(Account::getBalance)
+                        .mapToDouble(IAccount::getBalance)
                         .sum())
                 .sum();
     }
 
     @Override
-    public SortedSet<Account> getAccountsSortedBySum(Bank bank) {
+    public SortedSet<IAccount> getAccountsSortedBySum(Bank bank) {
 
-        TreeSet<Account> sortedAccounts =
+        TreeSet<IAccount> sortedIAccounts =
                 new TreeSet<>(Comparator
-                        .comparingDouble(Account::getBalance));
+                        .comparingDouble(IAccount::getBalance));
 
         bank.getClients()
                 .stream()
-                .map(Client::getAccounts)
-                .forEach(sortedAccounts::addAll);
+                .map(Client::getIAccounts)
+                .forEach(sortedIAccounts::addAll);
 
-        return sortedAccounts;
+        return sortedIAccounts;
     }
 
     @Override
     public double getBankCreditSum(Bank bank) {
         return bank.getClients()
                 .stream()
-                .mapToDouble(client -> client.getAccounts()
+                .mapToDouble(client -> client.getIAccounts()
                         .stream()
-                        .filter(CheckingAccount.class::isInstance)
-                        .mapToDouble(Account::getBalance)
+                        .filter(CheckingIAccount.class::isInstance)
+                        .mapToDouble(IAccount::getBalance)
                         .sum())
                 .sum();
     }
 
     @Override
-    public Map<Client, Collection<Account>> getCustomerAccounts(Bank bank) {
+    public Map<Client, Collection<IAccount>> getCustomerAccounts(Bank bank) {
         return bank.getClients()
                 .stream()
-                .collect(Collectors.toMap(client -> client, Client::getAccounts, (a, b) -> b));
+                .collect(Collectors.toMap(client -> client, Client::getIAccounts, (a, b) -> b));
     }
 
     @Override

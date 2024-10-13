@@ -10,17 +10,17 @@ public class AccountCache {
     private static final String SAVE = SAVING.name();
     private static final String CHECK = CHECKING.name();
 
-    private static final Map<String, AbstractAccount> cacheMap = new HashMap<>();
+    private static final Map<String, AbstractIAccount> cacheMap = new HashMap<>();
 
     static {
-        AbstractAccount savingAccount = new SavingAccount(0, 0.0);
-        AbstractAccount checkingAccount = new CheckingAccount(0, 0.0,0.0);
+        AbstractIAccount savingAccount = new SavingIAccount(0, 0.0);
+        AbstractIAccount checkingAccount = new CheckingIAccount(0, 0.0,0.0);
         cacheMap.put(SAVE, savingAccount);
         cacheMap.put(CHECK, checkingAccount);
     }
 
-    public static AbstractAccount cloneAccount(String type) {
-        final AbstractAccount abstractAccount = cacheMap.get(type);
+    public static AbstractIAccount cloneAccount(String type) {
+        final AbstractIAccount abstractAccount = cacheMap.get(type);
         if (abstractAccount != null) {
             return abstractAccount.clone();
         }

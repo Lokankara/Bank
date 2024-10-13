@@ -1,6 +1,6 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.account.Account;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.exceptions.ClientExistsException;
@@ -82,11 +82,11 @@ public class BankService {
                     .append(client)
                     .append("\n");
             int i = 1;
-            for (Account account : client.getAccounts()) {
+            for (IAccount IAccount : client.getIAccounts()) {
                 result.append("Account nr. ")
                         .append(i++)
                         .append(", maximum amount to withdraw: ")
-                        .append(Math.round(account.maximumAmountToWithdraw() * 100) / 100d)
+                        .append(Math.round(IAccount.maximumAmountToWithdraw() * 100) / 100d)
                         .append("\n");
             }
         }

@@ -5,29 +5,29 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 
-public class AccountCacheTest {
+public class IAccountCacheTest {
 
     @Test
     public void cloneAccountCheckingNotNull() {
-        AbstractAccount checking = AccountCache.cloneAccount("CHECKING");
+        AbstractIAccount checking = AccountCache.cloneAccount("CHECKING");
         assertNotNull(checking);
     }
 
     @Test
     public void cloneAccountSavingNotNull() {
-        AbstractAccount saving = AccountCache.cloneAccount("SAVING");
+        AbstractIAccount saving = AccountCache.cloneAccount("SAVING");
         assertNotNull(saving);
     }
 
     @Test
     public void cloneAccountCheckingInstance() {
-        AbstractAccount checking = AccountCache.cloneAccount("CHECKING");
-        assertInstanceOf(Account.class, checking);
+        AbstractIAccount checking = AccountCache.cloneAccount("CHECKING");
+        assertInstanceOf(IAccount.class, checking);
     }
 
     @Test
     public void cloneAccountSavingInstance() {
-        AbstractAccount saving = AccountCache.cloneAccount("SAVING");
-        assertInstanceOf(Account.class, saving);
+        AbstractIAccount saving = AccountCache.cloneAccount("SAVING");
+        assertInstanceOf(IAccount.class, saving);
     }
 }

@@ -1,6 +1,6 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.account.Account;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 
@@ -23,7 +23,7 @@ public interface BankReport {
 
     double getBankCreditSum(Bank bank);
 
-    Map<Client, Collection<Account>> getCustomerAccounts(Bank bank);
+    Map<Client, Collection<IAccount>> getCustomerAccounts(Bank bank);
 
     Map<String, List<Client>> getClientsByCity(Bank bank);
 
