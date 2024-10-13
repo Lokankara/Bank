@@ -84,12 +84,10 @@ public class Wait2Test {
     int counterOccured = 0;
 
     private void logAndCheckCounter(String threadName, int c) {
-    	log.info(threadName + ":" + c);
         if (counter != c) {
         	wrongCounter = true;
         }
         counterOccured++;
-        
         if (counterOccured == threadsAmount) {
             counter++;
             counterOccured = 0;

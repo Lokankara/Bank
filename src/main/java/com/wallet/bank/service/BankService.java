@@ -17,10 +17,6 @@ import java.util.List;
 public class BankService {
     private static String serialization;
 
-    public BankService(String serialization) {
-        BankService.serialization = serialization;
-    }
-
     public static void addBank(Bank bank) {
 
         if (serialization != null) {

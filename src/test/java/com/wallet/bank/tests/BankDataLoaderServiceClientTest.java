@@ -1,15 +1,18 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.bank.Bank;
-import com.wallet.bank.bank.service.BankDataLoaderService;
+import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
-import java.util.HashSet;
-import java.util.Set;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.wallet.bank.service.BankDataLoaderService;
+import com.wallet.bank.service.ClientBankService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BankDataLoaderServiceClientTest {
     Set<Client> clients = new HashSet<>();
@@ -33,13 +36,10 @@ public class BankDataLoaderServiceClientTest {
     @Test
     public void testLoadFeed() {
         Bank bank = new Bank();
-        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService(bank);
-        bankDataLoaderService.readClients(clientsFile);
+        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService(new ClientBankService());
+        bankDataLoaderService.readClients(bank, clientsFile);
         assertEquals(10, bank.getClients().size());
         assertTrue(bank.getClients().containsAll(clients));
-
-        for (Client client : bank.getClients()) {
-            assertEquals(1, client.getIAccounts().size());
-        }
+        bank.getClients().forEach(client -> assertEquals(1, client.getIAccounts().size()));
     }
 }

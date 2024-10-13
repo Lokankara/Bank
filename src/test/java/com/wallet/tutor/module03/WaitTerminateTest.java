@@ -29,7 +29,6 @@ public class WaitTerminateTest {
         @Override
         public void run() {
             for (int i = 0; ; i++) {
-                log.info(threadName + ":" + i);
                 synchronized (monitor) {
                     try {
                         while (!threadName.equals("t" + runningThreadNumber)) {

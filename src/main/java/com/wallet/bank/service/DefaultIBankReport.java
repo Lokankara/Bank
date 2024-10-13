@@ -14,7 +14,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
-public class DefaultBankReport implements BankReport {
+public class DefaultIBankReport implements IBankReport {
     @Override
     public int getNumberOfClients(Bank bank) {
         return bank.getClients().size();

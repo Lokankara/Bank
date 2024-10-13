@@ -1,21 +1,26 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.IAccount;
 import com.wallet.bank.account.CheckingIAccount;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.account.SavingIAccount;
-import com.wallet.bank.bank.Bank;
-import com.wallet.bank.bank.service.BankService;
+import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
 import com.wallet.bank.exceptions.ClientExistsException;
 import com.wallet.bank.exceptions.NotEnoughFundsException;
 import com.wallet.bank.exceptions.OverdraftLimitExceededException;
-import java.util.HashSet;
-import java.util.Set;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import com.wallet.bank.service.ClientBankService;
 import org.junit.jupiter.api.Test;
 
-public class BankServiceCheckingIAccountTest {
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+
+public class ClientBankServiceCheckingIAccountTest {
+
+    public ClientBankService bankService;
 
     @Test
     public void testCreateCheckingAccount() {
@@ -63,14 +68,13 @@ public class BankServiceCheckingIAccountTest {
         assertThrows(ClientExistsException.class, () -> {
             Bank bank = new Bank();
             Client client1 = new Client("Smith John", Gender.MALE);
-
+            bankService = new ClientBankService();
             Set<IAccount> IAccounts = new HashSet<>();
             IAccounts.add(new SavingIAccount(1, 1000.0));
             IAccounts.add(new CheckingIAccount(2, 1000.0, 100.0));
             client1.setIAccounts(IAccounts);
-
-            BankService.addClient(bank, client1);
-            BankService.addClient(bank, client1);
+            bankService.addClient(bank, client1);
+            bankService.addClient(bank, client1);
         });
     }
 }

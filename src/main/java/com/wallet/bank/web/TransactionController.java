@@ -1,6 +1,7 @@
 package com.wallet.bank.web;
 
 import com.wallet.bank.domain.Transaction;
+import com.wallet.bank.dto.TransactionDto;
 import com.wallet.bank.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @GetMapping
-    public ResponseEntity<List<Transaction>> getAllTransactions() {
+    public ResponseEntity<List<TransactionDto>> getAllTransactions() {
         return new ResponseEntity<>(transactionService.getAllTransactions(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<TransactionDto> createTransaction(@RequestBody Transaction transaction) {
         return new ResponseEntity<>(transactionService.createTransaction(transaction), HttpStatus.CREATED);
     }
 }

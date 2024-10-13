@@ -1,32 +1,34 @@
-package com.wallet.bank.bank.service;
+package com.wallet.bank.service;
 
 import com.wallet.bank.account.IAccount;
-import com.wallet.bank.bank.Bank;
+import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.exceptions.ClientExistsException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 @Slf4j
-public class BankService {
+@Service
+public class ClientBankService {
+    private String serializationFileName;
 
-    private static String serializationFileName;
-
-    public static void setSerializationFileName(String serializationFileName) {
-        BankService.serializationFileName = serializationFileName;
-    }
-
-    public static void addClient(Bank bank, Client client) throws ClientExistsException {
+    public void addClient(Bank bank, Client client) throws ClientExistsException {
         bank.addClient(client);
         saveBank(bank);
     }
 
-    public static Client getClient(Bank bank, String name) {
+    public Client getClient(Bank bank, String name) {
         return bank.getClient(name);
     }
 
-    public static void printMaximumAmountToWithdraw(Bank bank) {
+    public void printMaximumAmountToWithdraw(Bank bank) {
         System.out.format("%nPrint maximum amount to withdraw for all clients%n");
 
         StringBuilder result = new StringBuilder();
@@ -46,7 +48,7 @@ public class BankService {
         log.info(result.toString());
     }
 
-    public static void saveBank(Bank bank) {
+    public void saveBank(Bank bank) {
         if (serializationFileName == null) {
             return;
         }
@@ -63,29 +65,20 @@ public class BankService {
         }
     }
 
-    public static Bank readBank() {
-        if (serializationFileName == null) {
-            return null;
-        }
-        // check if file does exist and exit if not
-        if (!new File(serializationFileName).exists()) {
+    public Bank readBank() {
+        if (serializationFileName == null || !new File(serializationFileName).exists()) {
             return null;
         }
 
         Bank bank = null;
 
         try {
-            ObjectInputStream ois =
-                    new ObjectInputStream(
-                            new FileInputStream(
-                                    serializationFileName));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(serializationFileName));
             bank = (Bank) ois.readObject();
             ois.close();
         } catch (ClassNotFoundException | IOException e) {
-            System.err.println(e.getMessage());
+            log.error(e.getMessage());
         }
-
         return bank;
     }
-
 }

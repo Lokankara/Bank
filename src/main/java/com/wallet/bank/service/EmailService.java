@@ -1,7 +1,7 @@
 package com.wallet.bank.service;
 
-import com.wallet.bank.domain.Email;
 import com.wallet.bank.domain.Queue;
+import com.wallet.bank.email.Email;
 import com.wallet.bank.exceptions.BankException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

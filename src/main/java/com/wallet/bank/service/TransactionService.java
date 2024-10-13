@@ -2,6 +2,8 @@ package com.wallet.bank.service;
 
 import com.wallet.bank.dao.TransactionRepository;
 import com.wallet.bank.domain.Transaction;
+import com.wallet.bank.dto.TransactionDto;
+import com.wallet.bank.mapper.TransactionMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +15,14 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
-    public List<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    private final TransactionMapper mapper;
+
+    public List<TransactionDto> getAllTransactions() {
+        List<Transaction> transactions = transactionRepository.findAll();
+        return transactions.stream().map(mapper::toDto).toList();
     }
 
-    public Transaction createTransaction(Transaction transaction) {
-        return transactionRepository.save(transaction);
+    public TransactionDto createTransaction(Transaction transaction) {
+        return mapper.toDto(transactionRepository.save(transaction));
     }
 }

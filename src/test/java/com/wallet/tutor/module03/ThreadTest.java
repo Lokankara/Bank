@@ -16,7 +16,6 @@ public class ThreadTest {
         @Override
         public void run() {
             for (int i = 0; i < 100; i++) {
-                log.info(threadName + ":" + i);
                 Thread.yield();
             }
         }

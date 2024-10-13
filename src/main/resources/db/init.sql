@@ -1,25 +1,46 @@
--- Optional: Analyze the indexes to gather statistics
-ANALYZE Customers;
-ANALYZE Accounts;
-ANALYZE Transactions;
--- Test the Single-Column Index on Email
-EXPLAIN ANALYZE
-SELECT * FROM Customers WHERE email = 'clark.kent@dccomics.com';
+DROP TABLE IF EXISTS Transactions CASCADE;
+DROP TABLE IF EXISTS Accounts CASCADE;
+DROP TABLE IF EXISTS Customers CASCADE;
 
--- Test the Unique Index on Customer Name
-EXPLAIN ANALYZE
-SELECT * FROM Customers WHERE customer_name = 'Bruce Wayne';
+-- Create Customers Table
+CREATE TABLE Customers
+(
+    customer_id   SERIAL PRIMARY KEY,
+    customer_name VARCHAR(100),
+    email         VARCHAR(100) UNIQUE,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
--- Test the Composite Index on Account ID and Transaction Date
-EXPLAIN ANALYZE
-SELECT * FROM Transactions
-WHERE account_id = 1 AND transaction_date BETWEEN '2024-01-15' AND '2024-01-30';
+-- Create Accounts Table
+CREATE TABLE Accounts
+(
+    account_id   SERIAL PRIMARY KEY,
+    customer_id  INT REFERENCES Customers (customer_id) ON DELETE CASCADE,
+    account_type VARCHAR(50),
+    balance      DECIMAL(10, 2) DEFAULT 0.00,
+    created_at   TIMESTAMP      DEFAULT CURRENT_TIMESTAMP
+);
 
--- Test the Full-Text Index
-EXPLAIN ANALYZE
-SELECT * FROM Customers
-WHERE to_tsvector('english', customer_name) @@ to_tsquery('bruce:*');
+-- Create Transactions Table
+CREATE TABLE Transactions
+(
+    transaction_id   SERIAL PRIMARY KEY,
+    account_id       INT REFERENCES Accounts (account_id) ON DELETE CASCADE,
+    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    amount           DECIMAL(10, 2),
+    transaction_type VARCHAR(50)
+);
 
--- Check All Transactions for a Specific Account
-EXPLAIN ANALYZE
-SELECT * FROM Transactions WHERE account_id = 2;
+-- Create Indexes
+
+-- 1. Single-Column Index on email in Customers table
+CREATE INDEX idx_customers_email ON Customers (email);
+
+-- 2. Composite Index on account_id and transaction_date in Transactions table
+CREATE INDEX idx_transactions_account_date ON Transactions (account_id, transaction_date);
+
+-- 3. Unique Index on customer_name in Customers table
+CREATE UNIQUE INDEX idx_customers_unique_name ON Customers (customer_name);
+
+-- 4. Full-Text Index on customer_name in Customers table (for larger text queries)
+CREATE INDEX idx_customers_name_fulltext ON Customers USING gin (to_tsvector('english', customer_name));

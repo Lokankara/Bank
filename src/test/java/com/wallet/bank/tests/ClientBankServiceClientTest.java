@@ -10,7 +10,7 @@ import com.wallet.bank.service.BankService;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-public class BankServiceClientTest {
+public class ClientBankServiceClientTest {
 
     @Test
     public void testBank() throws ClientExistsException {

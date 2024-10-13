@@ -3,17 +3,22 @@ package com.wallet.bank.email;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.wallet.bank.domain.Client;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Email implements Serializable {
 
 	@Serial
     private static final long serialVersionUID = -3686472195559526951L;
 	private Client from;
-    private ArrayList<Client> to, copy;
+    private List<Client> to, copy;
     private String title, body;
 
     public Email setFrom(Client from) {
@@ -21,7 +26,7 @@ public class Email implements Serializable {
         return this;
     }
 
-    public Email setTo(ArrayList<Client> to) {
+    public Email setTo(List<Client> to) {
         this.to = to;
         return this;
     }
@@ -54,22 +59,22 @@ public class Email implements Serializable {
         this.body = body;
         return this;
     }
-    
+
     @Override
     public String toString() {
-    	ArrayList<Client> clients = getTo();
+    	List<Client> clients = getTo();
     	StringBuilder clientsTo = new StringBuilder();
     	for (Client c: clients) {
     		clientsTo.append(c);
     	}
-    	
+
     	clients = getCopy();
     	StringBuilder clientsCopy = new StringBuilder();
     	for (Client c: clients) {
     		clientsCopy.append(c);
     	}
-    	
-    	return "SEND EMAIL:" + "\n" + 
+
+    	return "SEND EMAIL:" + "\n" +
     			"From: " + getFrom() +
     			"To: " + clientsTo +
     			"Copy: " + clientsCopy +

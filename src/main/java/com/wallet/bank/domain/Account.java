@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -18,14 +19,15 @@ import java.sql.Timestamp;
 @Getter
 @ToString
 @AllArgsConstructor
+@Table(name = "Accounts")
 public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
-    @ToString.Exclude
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

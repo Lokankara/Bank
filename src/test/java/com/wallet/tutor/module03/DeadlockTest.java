@@ -50,7 +50,6 @@ public class DeadlockTest {
     public void testDeadlock() {
         t1 = new Thread(() -> IntStream.range(0, 200).forEach(i -> {
             account1.transfer(account2, 30);
-            log.info("t1: " + i);
             Thread.yield();
             try {
                 Thread.sleep(10);
@@ -61,7 +60,6 @@ public class DeadlockTest {
 
         t2 = new Thread(() -> IntStream.range(0, 200).forEach(i -> {
             account2.transfer(account1, 30);
-            log.info("t2: " + i);
         }));
 
         log.info("Starting threads");

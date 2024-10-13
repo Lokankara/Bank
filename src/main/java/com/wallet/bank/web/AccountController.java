@@ -1,6 +1,8 @@
 package com.wallet.bank.web;
 
 import com.wallet.bank.domain.Account;
+import com.wallet.bank.dto.AccountDto;
+import com.wallet.bank.mapper.AccountMapper;
 import com.wallet.bank.service.AccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,12 +23,15 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping
-    public ResponseEntity<List<Account>> getAllAccounts() {
-        return new ResponseEntity<>(accountService.getAllAccounts(), HttpStatus.OK);
+    public ResponseEntity<List<AccountDto>> getAllAccounts() {
+        return new ResponseEntity<>(accountService.getAllAccounts()
+                .stream().map(AccountMapper::toDto)
+                .toList(), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Account> createAccount(@RequestBody Account account) {
-        return new ResponseEntity<>(accountService.createAccount(account), HttpStatus.CREATED);
+    public ResponseEntity<AccountDto> createAccount(@RequestBody Account account) {
+        return new ResponseEntity<>(AccountMapper.toDto(accountService
+                .createAccount(account)), HttpStatus.CREATED);
     }
 }

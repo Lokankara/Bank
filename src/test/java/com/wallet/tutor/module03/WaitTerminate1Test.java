@@ -29,11 +29,9 @@ public class WaitTerminate1Test {
         @Override
         public void run() {
             for (int i = 0; ; i++) {
-                log.info(threadName + ":" + i);
                 synchronized (monitor) {
                     try {
                         while (!threadName.equals("t" + runningThreadNumber)) {
-                            //log.info("wait for thread "+"t"+runningThreadNumber);
                             monitor.wait();
                         }
                     } catch (InterruptedException e) {
@@ -83,16 +81,13 @@ public class WaitTerminate1Test {
         /**
          * In 10 ms will be executed interruptor, which will stop t1.
          */
-        Thread interruptor = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(10);
-                    log.info("Interrupting thread t1...");
-                    t1.interrupt();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        Thread interruptor = new Thread(() -> {
+            try {
+                Thread.sleep(10);
+                log.info("Interrupting thread t1...");
+                t1.interrupt();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         });
         interruptor.start();

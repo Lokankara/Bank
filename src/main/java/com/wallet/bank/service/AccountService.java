@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 public class AccountService {
 
-
     private final AccountRepository accountRepository;
 
     public List<Account> getAllAccounts() {

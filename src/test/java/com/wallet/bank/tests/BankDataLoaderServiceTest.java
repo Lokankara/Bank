@@ -1,9 +1,10 @@
 package com.wallet.bank.tests;
 
 import com.wallet.bank.account.IAccount;
-import com.wallet.bank.bank.Bank;
-import com.wallet.bank.bank.service.BankDataLoaderService;
-import com.wallet.bank.bank.service.BankReport;
+import com.wallet.bank.service.BankDataLoaderService;
+import com.wallet.bank.service.BankReport;
+import com.wallet.bank.service.ClientBankService;
+import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,15 +17,14 @@ import java.util.SortedSet;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BankDataLoaderServiceTest {
-
     String clientsFile = "src/main/resources/clients.txt";
     Bank bank = new Bank();
     BankReport bankReport;
 
     @BeforeEach
     public void initialize() {
-        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService(bank);
-        bankDataLoaderService.readClients(clientsFile);
+        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService(new ClientBankService());
+        bankDataLoaderService.readClients(bank, clientsFile);
         bankReport = new BankReport(bank);
     }
 
