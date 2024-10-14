@@ -1,8 +1,6 @@
-## Wallet Bank App
+## Heroes Bank App
 
 [![Java CI with Maven](https://github.com/Lokankara/Bank/actions/workflows/maven.yml/badge.svg)](https://github.com/Lokankara/Bank/actions/workflows/maven.yml)
-
-https://bank-hfw5.onrender.com
 
 ### Maven commands
 

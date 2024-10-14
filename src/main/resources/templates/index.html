@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <title>Text and Image</title>
+    <title>Avengers</title>
     <style>
         :root {
             --card-height: 290px;
@@ -145,7 +145,6 @@
     <div class="grid" th:each="customer : ${customers}">
         <a th:href="@{/customer/{id}(id=${customer.customerId})}"
            alt="new page"
-           target="_blank"
            class="card">
         <div class="wrapper">
                 <img src="https://media.idownloadblog.com/wp-content/uploads/2015/05/Avengers-2-Age-of-Ultron-Logo-iPhone-6-Wallpaper.jpg"

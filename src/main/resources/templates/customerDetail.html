@@ -22,6 +22,8 @@
         .character-detail {
             max-height: 75vh;
             transition: all 0.5s;
+            cursor: pointer;
+            margin-top: 5%;
         }
 
         .character-detail:hover {
@@ -29,29 +31,11 @@
             transform: translate3d(0%, -5%, 10px);
         }
 
-        .back-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #49b93d;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .back-button:hover {
-            background-color: #0056b3;
-        }
-
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h1 th:text="${customer.name}" class="back-button"></h1>
-    <a th:href="/">
-        <img th:src="${customer.imageUrl}" alt="Character" class="character-detail"/>
-    </a>
+    <img th:src="${customer.imageUrl}" alt="Character" class="character-detail" onclick="history.back();"/>
 </div>
 </body>
 </html>
