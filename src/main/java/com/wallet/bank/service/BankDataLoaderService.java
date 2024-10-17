@@ -15,8 +15,6 @@ import java.io.LineNumberReader;
 @AllArgsConstructor
 public class BankDataLoaderService {
 
-    private final ClientBankService service;
-
     public void readClients(Bank bank, String fileName) {
         if (fileName == null) {
             return;
@@ -35,7 +33,7 @@ public class BankDataLoaderService {
 
     private void addClient(Bank bank, Client client) {
         try {
-            service.addClient(bank, client);
+            ClientBankService.addClient(bank, client);
         } catch (ClientExistsException e) {
             System.err.println(e.getMessage());
         }

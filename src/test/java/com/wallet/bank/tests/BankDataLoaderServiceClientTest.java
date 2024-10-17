@@ -4,7 +4,6 @@ import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
 import com.wallet.bank.service.BankDataLoaderService;
-import com.wallet.bank.service.ClientBankService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +35,7 @@ public class BankDataLoaderServiceClientTest {
     @Test
     public void testLoadFeed() {
         Bank bank = new Bank();
-        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService(new ClientBankService());
+        BankDataLoaderService bankDataLoaderService = new BankDataLoaderService();
         bankDataLoaderService.readClients(bank, clientsFile);
         assertEquals(10, bank.getClients().size());
         assertTrue(bank.getClients().containsAll(clients));

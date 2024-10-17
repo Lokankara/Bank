@@ -17,20 +17,19 @@ import java.io.ObjectOutputStream;
 @Slf4j
 @Service
 public class ClientBankService {
-    private String serializationFileName;
+    private static String serializationFileName;
 
-    public void addClient(Bank bank, Client client) throws ClientExistsException {
+    public static void addClient(Bank bank, Client client) throws ClientExistsException {
         bank.addClient(client);
         saveBank(bank);
     }
 
-    public Client getClient(Bank bank, String name) {
+    public Client get(Bank bank, String name) {
         return bank.getClient(name);
     }
 
     public void printMaximumAmountToWithdraw(Bank bank) {
-        System.out.format("%nPrint maximum amount to withdraw for all clients%n");
-
+        log.info("%nPrint maximum amount to withdraw for all clients%n");
         StringBuilder result = new StringBuilder();
         for (Client client : bank.getClients()) {
             result.append("Client: ")
@@ -48,16 +47,13 @@ public class ClientBankService {
         log.info(result.toString());
     }
 
-    public void saveBank(Bank bank) {
+    public static void saveBank(Bank bank) {
         if (serializationFileName == null) {
             return;
         }
 
         try {
-            ObjectOutputStream oos =
-                    new ObjectOutputStream(
-                            new FileOutputStream(
-                                    serializationFileName));
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(serializationFileName));
             oos.writeObject(bank);
             oos.close();
         } catch (IOException e) {

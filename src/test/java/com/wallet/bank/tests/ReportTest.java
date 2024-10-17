@@ -1,7 +1,7 @@
 package com.wallet.bank.tests;
 
-import com.wallet.bank.account.IAccount;
 import com.wallet.bank.account.CheckingIAccount;
+import com.wallet.bank.account.IAccount;
 import com.wallet.bank.domain.Bank;
 import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
@@ -9,16 +9,18 @@ import com.wallet.bank.domain.SavingIAccount;
 import com.wallet.bank.exceptions.ClientExistsException;
 import com.wallet.bank.exceptions.NotEnoughFundsException;
 import com.wallet.bank.service.BankReportStreams;
-import com.wallet.bank.service.BankService;
+import com.wallet.bank.service.ClientBankService;
 import com.wallet.bank.service.StreamBankReport;
+import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import org.junit.jupiter.api.Test;
 
 public class ReportTest {
     @Test
@@ -33,9 +35,9 @@ public class ReportTest {
         client1.addAccount(IAccount1);
         client1.addAccount(IAccount2);
 
-        BankService.addClient(bank, client1);
-        BankService.addClient(bank, client2);
-        BankService.addClient(bank, client3);
+        ClientBankService.addClient(bank, client1);
+        ClientBankService.addClient(bank, client2);
+        ClientBankService.addClient(bank, client3);
 
         IAccount1.deposit(100);
 

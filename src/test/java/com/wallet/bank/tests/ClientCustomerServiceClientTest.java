@@ -6,11 +6,12 @@ import com.wallet.bank.domain.Client;
 import com.wallet.bank.domain.Gender;
 import com.wallet.bank.domain.SavingIAccount;
 import com.wallet.bank.exceptions.ClientExistsException;
-import com.wallet.bank.service.BankService;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.wallet.bank.service.ClientBankService;
 import org.junit.jupiter.api.Test;
 
-public class ClientBankServiceClientTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class ClientCustomerServiceClientTest {
 
     @Test
     public void testBank() throws ClientExistsException {
@@ -23,8 +24,8 @@ public class ClientBankServiceClientTest {
         client2.addAccount(new SavingIAccount(3, 2000.0));
         client2.addAccount(new CheckingIAccount(4, 1500.0, 200.0));
 
-        BankService.addClient(bank, client1);
-        BankService.addClient(bank, client2);
+        ClientBankService.addClient(bank, client1);
+        ClientBankService.addClient(bank, client2);
 
         assertEquals(2, bank.getClients().size());
         assertEquals(2, bank.getPrintedClients());
@@ -33,4 +34,3 @@ public class ClientBankServiceClientTest {
     }
 
 }
-
