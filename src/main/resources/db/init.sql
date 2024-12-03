@@ -31,3 +31,17 @@ CREATE TABLE Transactions
     amount           DECIMAL(10, 2),
     transaction_type VARCHAR(50)
 );
+
+SELECT a.id, a.name
+FROM authors a
+WHERE a.id IN (SELECT author_id
+               FROM books_authors
+               order by author_id);
+
+SELECT b.name, a.name, b.year
+from authors a
+         join books_authors ba on a.id = ba.author_id
+         join books b on ba.book_id = b.id
+WHERE b.year > 2010
+  and b.year < 2020
+

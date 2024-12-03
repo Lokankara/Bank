@@ -40,4 +40,8 @@
     <bean id="parentCustomerService" abstract="true" class="com.wallet.bank.service.CustomerService">
         <constructor-arg ref="customerRepository"/>
     </bean>
+
+    <bean id="childBean" class="com.wallet.bank.service.CustomerBankService" parent="parentCustomerService">
+    </bean>
+
 </beans>

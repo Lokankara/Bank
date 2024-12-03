@@ -1,0 +1,181 @@
+<p>Collection basically contains the elements of element type.
+element type means the type of elements we are adding into the collection.</p><p>Example:
+Collection of String will contain the elements of String element type.
+Collection of Integer will contain the elements of Integer type.
+Collection of Address will contain the elements of Address type.
+Note:
+Element type can be a simple atomic type or it can be any other complex type.</p><p></p><p>We define collection of string as below</p><pre><collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false"/></pre>
+
+<p>We have not specified the type,so it takes Collection of String by default.</p><p>We define List of string as below
+
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="list"/>
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="list"/>
+We have specified type=list so It will be List of String.
+We define Set of string as below
+
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="set"/>
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="set"/>
+In all the above definitions, elementtype is String which is an atomic type
+We define Collection of Address as below
+
+
+<collectiontype code="AddressCollection" elementtype="Address" autocreate="true" generate="false"/>
+
+<collectiontype code="AddressCollection" elementtype="Address" autocreate="true" generate="false"/>
+Here elementtype is Address which is a complex type and also another item type.
+We define List of Language as below
+
+
+<collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/>
+
+<collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/>
+Here elementtype is Language which is a again another item type
+
+How we use these collections with item type?
+Once we have created the collection, we need to inject them to the required item type.
+We can inject list of language and list of String to our CustomUser type as below
+
+
+<itemtype code="CustomUser" autocreate="true" generate="false">
+                <deployment table="CustomUser" typecode="11001" />
+                <attributes>
+                    <attribute qualifier="userId" type="java.lang.String">
+                        <modifiers optional="false" unique="true"/>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="languages" type="LanguageList">
+                        <modifiers unique="false" read="false"/>
+                        <persistence type="property" />
+                    </attribute>
+                    <attribute qualifier="nickNames" type="StringCollection">
+                        <modifiers unique="false" read="false"/>
+                        <persistence type="property" />
+                    </attribute>
+                </attributes>
+            </itemtype> 
+
+<itemtype code="CustomUser" autocreate="true" generate="false">
+				<deployment table="CustomUser" typecode="11001" />
+				<attributes>
+					<attribute qualifier="userId" type="java.lang.String">
+						<modifiers optional="false" unique="true"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="languages" type="LanguageList">
+						<modifiers unique="false" read="false"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="nickNames" type="StringCollection">
+						<modifiers unique="false" read="false"/>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype> 
+We can see that 2nd attribute has a qualifier called “languages”
+And its type is “LanguageList” which is basically the code we defined in the collection of Language using below tag
+
+
+<collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/> 
+
+<collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/> 
+
+We can see that 3rd attribute has a qualifier called “nickNames”
+And its type is “StringCollection” which is basically the code we defined in the collection of String using below tag
+
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false"/>
+
+<collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false"/>
+The code in the collectiontype tag should become the type for an attribute in the attribute definition.
+
+After adding this change in items.xml file, do the build
+CustomUserModel.java file will be generated
+Check this file for the attribute called “languages” and “nickNames”
+It should be generated as below
+
+
+private List<LanguageModel> _languages;
+private Collection<String> _nickNames;
+
+private List<LanguageModel> _languages;
+private Collection<String> _nickNames;
+So we have defined List of langauge and a collection of String for CustomUserModel.
+While defining collection,
+make autocreate as true so that collection type gets created in the backend.
+make generate as false as we don’t need to generate Jalo class for collection type.
+How collection will be stored in DB ?
+
+There are 2 cases in Collection
+1)Collection of Atomic type
+In our CustomUser item type we have defined List of nickName Where nickName is a String which is atomic type.
+If collection contains atomic types then the values are stored as binary fields in the database.
+2)Collection of Non atomic/composed type
+In our CustomUser item type we have defined List of Language Where Language is a separate item type.
+If collection contains complex types then those items PKs are stored as one single String separated by comma for each PK in the database.
+
+About the Author
+
+
+
+Raj
+
+Founder of javainsimpleway.com
+I love Java and open source technologies and very much passionate about software development.
+I like to share my knowledge with others especially on technology 🙂
+I have given all the examples as simple as possible to understand for the beginners.
+All the code posted on my blog is developed,compiled and tested in my development environment.
+If you find any mistakes or bugs, Please drop an email to kb.knowledge.sharing@gmail.com</p><pre><collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="list"/></pre>
+
+<p>We have specified type=list so It will be List of String.</p><p>We define Set of string as below</p><pre><collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false" type="set"/></pre>
+
+<p>In all the above definitions, elementtype is String which is an atomic type</p><p>We define Collection of Address as below</p><pre><collectiontype code="AddressCollection" elementtype="Address" autocreate="true" generate="false"/></pre>
+
+<p>Here elementtype is Address which is a complex type and also another item type.</p><p>We define List of Language as below</p><pre><collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/></pre>
+
+<p>Here elementtype is Language which is a again another item type
+
+How we use these collections with item type?
+Once we have created the collection, we need to inject them to the required item type.</p><p></p><p>We can inject list of language and list of String to our CustomUser type as below</p><pre><itemtype code="CustomUser" autocreate="true" generate="false">
+				<deployment table="CustomUser" typecode="11001" />
+				<attributes>
+					<attribute qualifier="userId" type="java.lang.String">
+						<modifiers optional="false" unique="true"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="languages" type="LanguageList">
+						<modifiers unique="false" read="false"/>
+						<persistence type="property" />
+					</attribute>
+					<attribute qualifier="nickNames" type="StringCollection">
+						<modifiers unique="false" read="false"/>
+						<persistence type="property" />
+					</attribute>
+				</attributes>
+			</itemtype> </pre>
+
+<p>We can see that 2nd attribute has a qualifier called “languages”
+And its type is “LanguageList” which is basically the code we defined in the collection of Language using below tag</p><pre><collectiontype code="LanguageList" elementtype="Language" autocreate="true" generate="false" type="list"/> </pre>
+
+<p>
+We can see that 3rd attribute has a qualifier called “nickNames”
+And its type is “StringCollection” which is basically the code we defined in the collection of String using below tag</p><pre><collectiontype code="StringCollection" elementtype="java.lang.String" autocreate="true" generate="false"/></pre>
+
+<p>The code in the collectiontype tag should become the type for an attribute in the attribute definition.
+
+After adding this change in items.xml file, do the build</p><p>CustomUserModel.java file will be generated
+Check this file for the attribute called “languages” and “nickNames”</p><p>It should be generated as below</p><pre>private List<LanguageModel> _languages;
+private Collection<String> _nickNames;</pre>
+
+<p>So we have defined List of langauge and a collection of String for CustomUserModel.</p><p>While defining collection,
+make autocreate as true so that collection type gets created in the backend.
+make generate as false as we don’t need to generate Jalo class for collection type.
+How collection will be stored in DB ?
+
+There are 2 cases in Collection</p><p></p><p>1)Collection of Atomic type
+In our CustomUser item type we have defined List of nickName Where nickName is a String which is atomic type.</p><p>If collection contains atomic types then the values are stored as binary fields in the database.</p><p>2)Collection of Non atomic/composed type
+In our CustomUser item type we have defined List of Language Where Language is a separate item type.</p><p>If collection contains complex types then those items PKs are stored as one single String separated by comma for each PK in the database.</p><h2>About the Author</h2>
+<p>Connect with me on Facebook for more updates</p>

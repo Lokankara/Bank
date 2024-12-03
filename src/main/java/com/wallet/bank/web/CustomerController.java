@@ -17,7 +17,8 @@ import java.util.List;
 @RequestMapping("/api/customers")
 public class CustomerController extends BaseController {
 
-    public CustomerController(CustomerBankService customerBankService) {
+    public CustomerController(
+            CustomerBankService customerBankService) {
         super(customerBankService);
     }
 

@@ -1,0 +1,94 @@
+<p>
+Hybris commerce suite comes with .zip file which contains all the files required to work with Hybris.
+
+Lets see the steps to setup the Hybris
+
+Step 1:  Download and Unzip Hybris suite
+</p><p></p><p></p><p></p><p>Download Hybris Zip file from SAP Market place.</p><p>Copy it to one of the folder in your local system,I have copied it in E:\practice folder(I will be using this folder for all hybris folder path, please adjust it accordingly in your system)</p><p>I am using Hybris 5.6</p><p>Unzip the zipped file using 7 zip(if you don’t have 7 zip,please download from Here) to the same folder.</p><p></p><p>Delete the zipped folder of Hybris from this path.
+Step 2:  Installing Recipe
+
+Recipe concept is available from Hybris 5.5 and later versions.
+It is used to install B2C accelerators,B2B accelerators ,Telco accelerators etc</p><p></p><p>Before installing Recipe, observe that we can find only bin folder inside hybris folder.</p><p></p><p>Go to installer path in command prompt
+E:\practice\installer install.bat –r b2c_acc_plus
+(syntax is            install.bat –r recipeName)
+This command is used to install the recipe</p><p></p><p>This command will add the required extensions to the localextensions.xml file as per the recipe name we have provided in the command.</p><p>Now we can see that Recipe command ran successfully</p><p></p><p>Now open the hybris folder and check the folders created</p><p></p><p>Inside config folder, we can see that localextensions.xml got created with all the extensions specified in the given recipe.</p><p>localextensions.xml after installing Recipe looks like below</p><pre><hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+  <extensions>
+    <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+    <extension name='mcc' />
+    <extension name='backoffice' />
+    <extension name='commercesearchbackoffice' />
+    <extension name='yacceleratorcockpits' />
+    <extension name='yacceleratorinitialdata' />
+    <extension name='yacceleratorstorefront' />
+    <extension name='yaddon' />
+    <extension name='ycommercewebservices' />
+    <extension name='electronicsstore' />
+    <extension name='apparelstore' />
+    <extension name='captchaaddon' />
+    <extension name='b2ccheckoutaddon' />
+    <extension name='liveeditaddon' />
+    <extension name='acceleratorwebservicesaddon' />
+  </extensions>
+</hybrisconfig></pre>
+
+<p>We can find all the available recipe in hybris under below directory
+E:\practice\installer\recipes
+Step 3:  Modulegen
+
+Its an Ant command used to generate the set of logically related  extensions at once.</p><p></p><p>Navigate to platform folder in command prompt
+Run the below command</p><p>setantenv.bat</p><p></p><p>Now run the modulegen command as below in the same command window
+ant modulegen -Dinput.module=accelerator -Dinput.name=training -Dinput.package=com.hybris.training -Dinput.template=develop</p><p>we have specified module as accelerator which means we are developing B2C module.</p><p>we can specify any name to the module, we have given training for the same.</p><p>We can also specify the java class package prefix, we have given as com.hybris.training</p><p>Template specifies whether configuration is for development or production.</p><p>We have given it as develop as we are doing for development environment.</p><p>We should be able to see the Build success in the command prompt as below</p><p></p><p>You can see the next steps to be performed in the command prompt</p><p>Just do the first 2 steps, and then localextensions.xml should be as below</p><pre><hybrisconfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:noNamespaceSchemaLocation='../bin/platform/resources/schemas/extensions.xsd'>
+  <extensions>
+    <path dir='${HYBRIS_BIN_DIR}' autoload='false' />
+    <extension name='mcc' />
+    <extension name='backoffice' />
+    <extension name='commercesearchbackoffice' />
+    <extension name='trainingfulfilmentprocess' />
+	<extension name='trainingcore' />
+	<extension name='trainingfacades' />
+	<extension name='trainingtest' />
+	<extension name='trainingstorefront' />
+    <extension name='traininginitialdata' />
+	<extension name='trainingcockpits' />
+    <extension name='yaddon' />
+    <extension name='ycommercewebservices' />
+    <extension name='electronicsstore' />
+    <extension name='apparelstore' />
+    <extension name='captchaaddon' />
+    <extension name='b2ccheckoutaddon' />
+    <extension name='liveeditaddon' />
+    <extension name='acceleratorwebservicesaddon' />
+  </extensions>
+</hybrisconfig></pre>
+
+<p>
+Step 4:  Run ant clean all
+Run ant clean all command in the command prompt
+Make sure the build is success
+Step 5:  Start the hybris server
+
+Start the Hybris server using the below command</p><p></p><p></p><p>hybrisserver.bat debug</p><p></p><p>
+Step 6:  Initialization
+
+We can do the initialization of the system in 2 ways</p><p></p><p>a)Using below command in command prompt
+ant initialize</p><p>b) Initialize from HAC directly.</p><p>Lets do it using HAC</p><p>Access the below url
+http://localhost:9001
+make sure Toggle all checkbox is selected.</p><p>click on initialize button and confirm the initialization</p><p></p><p>This will take considerable amount of time based on the system memory and processor as it creates new DB schema, tables and loads the configured data.</p><p>Wait till the initialization gets finished as shown in below image.</p><p></p><p>
+Step 7
+
+Enter below URL mappings in Host file in the below path
+C:\Windows\System32\drivers\etc</p><p></p><pre>127.0.0.1   apparel.local
+127.0.0.1   electronics.local</pre>
+
+<p>
+Step 8
+
+Accessing sample sites</p><p></p><p>Now try to access the sample sites shipped with Hybris using below url</p><p>Apparel UK site
+http://apparel.local:9001/trainingstorefront/?site=apparel-uk</p><p>
+
+
+Similarly access the below sites as well
+</p><p></p><p>Apparel-DE site
+http://localhost:9001/ trainingstorefront/?site=apparel-de</p><p>Electronics site
+http://localhost:9001/ trainingstorefront/?site=electronics</p><p>All these are sample B2C sites shipped by Hybris itself.</p><p>Once we are able to access these sites, we can confirm that we have installed and configured the hybris successfully in our local machine.</p><h2>About the Author</h2>
+<p>Connect with me on Facebook for more updates</p>
